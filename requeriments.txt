@@ -1,0 +1,19 @@
+# Project requirements
+flask==1.1.4
+flask-sqlalchemy
+flask-marshmallow
+Flask-Script
+requests
+psycopg2-binary
+SQLAlchemy-serializer
+apscheduler
+
+# Base requirements
+black
+coverage
+flake8
+gunicorn
+isort
+pre-commit
+pytest
+pytest-cov

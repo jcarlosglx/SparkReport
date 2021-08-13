@@ -1,0 +1,18 @@
+use black
+
+    black in file
+    > black main.py
+
+    black in a dir
+    > black app
+
+use coverage
+
+    coverage with pytest
+    > coverage run -m pytest args1 args2
+
+    coverage for report terminal (simple report)
+    > coverage report
+
+    coverage for report HTML (complex report)
+    > coverage html

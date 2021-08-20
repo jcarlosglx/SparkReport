@@ -8,6 +8,7 @@ psycopg2-binary
 SQLAlchemy-serializer
 apscheduler
 flask-sqlalchemy
+pyspark
 
 # Base requirements
 black

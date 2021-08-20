@@ -1,7 +1,8 @@
+from sqlalchemy_serializer import SerializerMixin
 from app.models.entryORM import db
 
 
-class LogModel(db.Model):
+class LogModel(db.Model, SerializerMixin):
     __tablename__ = "log_model"
     __table_args__ = {"extend_existing": True}
 

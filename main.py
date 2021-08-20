@@ -1,5 +1,7 @@
 from app.commands.runServer import RunServer
 from app.commands.runTests import RunTests
+from app.commands.createData import CreateData
+from app.commands.initDB import InitDB
 from app.entryApp import create_app, get_config_app
 from flask_script import Manager
 from app.routes.blueprints import load_blueprints
@@ -9,6 +11,8 @@ type_config_app = get_config_app()
 instance = create_app()
 manager_commands = Manager(instance)
 manager_commands.add_command(RunTests.NAME, RunTests(instance))
+manager_commands.add_command(InitDB.NAME, InitDB(instance))
+manager_commands.add_command(CreateData.NAME, CreateData(instance))
 manager_commands.add_command(RunServer.NAME, RunServer(instance))
 scheduler = HealthCheckServer(instance)
 

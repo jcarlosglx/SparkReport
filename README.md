@@ -34,6 +34,7 @@ of commands for save time
 
 - API-REST
 - Python
+- Spark
 - Flask
 - Pytest
 - Docker

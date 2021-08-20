@@ -4,7 +4,6 @@ from flask import Flask
 from werkzeug.exceptions import default_exceptions
 
 from app.config.configApp import AppConfig, config_app
-from app.config.configDB import DBConfig, config_db
 from app.config.configServer import ServerConfig, config_server
 from app.exceptions.handler import HandlerError
 from app.middleware.middleware import Middleware
@@ -37,15 +36,6 @@ def get_config_app(type_config: str = "") -> AppConfig:
     if environ.get("PATH_DB"):
         type_configuration = "DEPLOY"
     return config_app[type_configuration]
-
-
-def get_config_db(type_config: str = "") -> DBConfig:
-    if type_config != "":
-        return config_db[type_config]
-    type_configuration = "DEV"
-    if environ.get("PATH_DB"):
-        type_configuration = "DEPLOY"
-    return config_db[type_configuration]
 
 
 def get_config_server(type_config: str = "") -> ServerConfig:

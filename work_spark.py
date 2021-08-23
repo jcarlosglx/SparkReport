@@ -38,4 +38,4 @@ with SparkDataFrame("FinancialApp") as spark_df:
     plt.title("Plotting Stocks")
     plt.legend(loc="upper left")
     plt.grid()
-    plt.show()
+    plt.savefig(join(path_base, "Prueba-x.png"))

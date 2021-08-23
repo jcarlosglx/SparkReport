@@ -9,6 +9,9 @@ SQLAlchemy-serializer
 apscheduler
 flask-sqlalchemy
 pyspark
+pandas
+matplotlib
+reportlab
 
 # Base requirements
 black

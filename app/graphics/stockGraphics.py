@@ -10,12 +10,12 @@ class StockGraphics:
         self.y_figure = y_figure
 
     def __template(self, tittle: str, x_df: DataFrame, y_df: DataFrame):
-        plt.figure(figsize=(self.x_figure, self.y_figure))
-        plt.grid()
-        plt.legend(loc="upper left")
-        plt.title(f"{tittle}")
         x_name = x_df.columns[0]
         y_name = y_df.columns[0]
+        plt.figure(figsize=(self.x_figure, self.y_figure))
+        plt.grid()
+        plt.legend(labels=[x_name, y_name], loc="upper left")
+        plt.title(f"{tittle}")
         plt.ylabel(y_name)
         plt.xlabel(x_name)
 

@@ -19,11 +19,20 @@ class StockGraphics:
         plt.ylabel(y_name)
         plt.xlabel(x_name)
 
+    def get_statistics(self, pandas_df: DataFrame) -> dict:
+        name = pandas_df.columns[0]
+        return {
+            "mean": pandas_df[name].mean(),
+            "median": pandas_df[name].median(),
+            "mode": pandas_df[name].mode(),
+            "std": pandas_df[name].std(),
+            "max": pandas_df[name].max(),
+            "min": pandas_df[name].min()
+        }
+
     def create_histogram(self, pandas_df: DataFrame) -> NoReturn:
         x_name = pandas_df.columns[0]
-        std = pandas_df[x_name].std()
-        mean = pandas_df[x_name].mean()
-        self.__template(f"Histogram Stock, std: {std} mean: {mean}", pandas_df, pandas_df)
+        self.__template("Histogram Stock", pandas_df, pandas_df)
         num_bins = 40
         plt.hist(pandas_df[x_name], num_bins, facecolor="blue")
         plt.savefig(self.path_img)

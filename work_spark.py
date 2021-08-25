@@ -2,8 +2,8 @@ from app.contextManager.spark.sparkDF import SparkDataFrame
 from app.contextManager.img.imgFile import IMGFile
 from os.path import abspath, dirname, join
 from app.schemas.stockSchema import stock_schema
-from app.reports.singleReport import single_report_pdf
-from app.graphics.plot import create_plot
+from app.reports.singleReport import SingleReport
+from app.graphics.stockGraphics import StockGraphics
 
 path_base = abspath(dirname(__file__))
 path_db = join(path_base, "app/database/stock.csv")
@@ -17,8 +17,34 @@ with SparkDataFrame("FinancialApp") as spark_df:
     # file_df.printSchema()
     # file_df.show(truncate=True)
 
-    stock_df = file_df.select("Date", "AMZN")
-    pd_df = stock_df.toPandas()
+    # for plot
+    stock_x_df = file_df.select("Date")
+    stock_y_df = file_df.select("AMZN")
     with IMGFile() as path_plot:
-        create_plot(pd_df, path_plot)
-        single_report_pdf(pd_df, "font-colors.pdf", path_plot)
+        pandas_stock_x_df = stock_x_df.toPandas()
+        pandas_stock_y_df = stock_y_df.toPandas()
+        stock_graphic = StockGraphics(path_plot)
+        stock_graphic.create_plot(pandas_stock_x_df, pandas_stock_y_df)
+        other_info = stock_graphic.get_statistics(pandas_stock_y_df)
+        SingleReport().single_report_pdf(pandas_stock_y_df, "font-colors.pdf", path_plot, other_info)
+
+    # for scatter
+    # with IMGFile() as path_plot:
+    #     pd_x_df = file_df.select("AMZN")
+    #     pd_y_df = file_df.select("GOOG")
+    #     create_scatter(pd_x_df.toPandas(), pd_y_df.toPandas(), path_plot)
+    #     single_report_pdf(file_df.select("AMZN", "GOOG"), "test.pdf", path_plot)
+
+    # for histogram
+    # stock_df = file_df.select("AMZN")
+    # pd_df = stock_df.toPandas()
+    # with IMGFile() as path_plot:
+    #     create_histogram(pd_df, path_plot)
+    #     single_report_pdf(pd_df, "font-colors.pdf", path_plot)
+
+    # for boxplot
+    # stock_df = file_df.select("AMZN")
+    # pd_df = stock_df.toPandas()
+    # with IMGFile() as path_plot:
+    #     create_boxplot(pd_df, path_plot)
+    #     single_report_pdf(pd_df, "font-colors.pdf", path_plot)

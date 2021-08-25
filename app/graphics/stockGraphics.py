@@ -24,7 +24,7 @@ class StockGraphics:
         return {
             "mean": pandas_df[name].mean(),
             "median": pandas_df[name].median(),
-            "mode": pandas_df[name].mode(),
+            "mode": pandas_df[name].mode()[0],
             "std": pandas_df[name].std(),
             "max": pandas_df[name].max(),
             "min": pandas_df[name].min()

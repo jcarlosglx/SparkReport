@@ -1,4 +1,4 @@
-from typing import NoReturn
+from typing import NoReturn, List
 from pandas import DataFrame
 import matplotlib.pyplot as plt
 
@@ -9,12 +9,20 @@ class StockGraphics:
         self.x_figure = x_figure
         self.y_figure = y_figure
 
-    def __template(self, tittle: str, x_df: DataFrame, y_df: DataFrame):
+    def __single_template(self, tittle: str, x_df: DataFrame, y_df: DataFrame):
         x_name = x_df.columns[0]
         y_name = y_df.columns[0]
         plt.figure(figsize=(self.x_figure, self.y_figure))
         plt.grid()
-        plt.legend(labels=[x_name, y_name], loc="upper left")
+        plt.title(f"{tittle}")
+        plt.ylabel(y_name)
+        plt.xlabel(x_name)
+
+    def __multi_template(self, tittle: str, x_df: DataFrame, y_df: DataFrame):
+        x_name = x_df.columns[0]
+        y_name = str([f"{name} " for name in y_df.columns])
+        plt.figure(figsize=(self.x_figure, self.y_figure))
+        plt.grid()
         plt.title(f"{tittle}")
         plt.ylabel(y_name)
         plt.xlabel(x_name)
@@ -32,22 +40,31 @@ class StockGraphics:
 
     def create_histogram(self, pandas_df: DataFrame) -> NoReturn:
         x_name = pandas_df.columns[0]
-        self.__template("Histogram Stock", pandas_df, pandas_df)
+        self.__single_template("Histogram Stock", pandas_df, pandas_df)
         num_bins = 40
         plt.hist(pandas_df[x_name], num_bins, facecolor="blue")
         plt.savefig(self.path_img)
 
     def create_boxplot(self, pandas_df: DataFrame) -> NoReturn:
-        self.__template("Plotting Stocks", pandas_df, pandas_df)
+        self.__single_template("Plotting Stocks", pandas_df, pandas_df)
         plt.boxplot(pandas_df)
         plt.savefig(self.path_img)
 
     def create_scatter(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame) -> NoReturn:
-        self.__template("Stock compare", pandas_x_df, pandas_y_df)
+        self.__single_template("Stock compare", pandas_x_df, pandas_y_df)
         plt.scatter(pandas_x_df, pandas_y_df)
         plt.savefig(self.path_img)
 
     def create_plot(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame) -> NoReturn:
-        self.__template("Plotting Stocks", pandas_x_df, pandas_y_df)
-        plt.plot(pandas_x_df, pandas_y_df, linewidth=3)
+        self.__single_template("Plotting Stocks", pandas_x_df, pandas_y_df)
+        name = pandas_y_df.columns[0]
+        plt.plot(pandas_x_df, pandas_y_df, label=name, linewidth=3)
+        plt.legend(loc="upper left")
+        plt.savefig(self.path_img)
+
+    def create_multi_plot(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame) -> NoReturn:
+        self.__multi_template("Plotting Stocks", pandas_x_df, pandas_y_df)
+        name = pandas_y_df.columns
+        plt.plot(pandas_x_df, pandas_y_df, label=name, linewidth=3)
+        plt.legend(loc="upper left")
         plt.savefig(self.path_img)

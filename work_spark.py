@@ -18,15 +18,15 @@ with SparkDataFrame("FinancialApp") as spark_df:
     # file_df.show(truncate=True)
 
     # for plot
-    stock_x_df = file_df.select("Date")
-    stock_y_df = file_df.select("AMZN")
-    with IMGFile() as path_plot:
-        pandas_stock_x_df = stock_x_df.toPandas()
-        pandas_stock_y_df = stock_y_df.toPandas()
-        stock_graphic = StockGraphics(path_plot)
-        stock_graphic.create_plot(pandas_stock_x_df, pandas_stock_y_df)
-        other_info = stock_graphic.get_statistics(pandas_stock_y_df)
-        SingleReport().single_report_pdf(pandas_stock_y_df, "font-colors.pdf", path_plot, other_info)
+    # stock_x_df = file_df.select("Date")
+    # stock_y_df = file_df.select("AMZN")
+    # with IMGFile() as path_plot:
+    #     pandas_stock_x_df = stock_x_df.toPandas()
+    #     pandas_stock_y_df = stock_y_df.toPandas()
+    #     stock_graphic = StockGraphics(path_plot)
+    #     stock_graphic.create_plot(pandas_stock_x_df, pandas_stock_y_df)
+    #     other_info = stock_graphic.get_statistics(pandas_stock_y_df)
+    #     SingleReport().single_report_pdf(pandas_stock_y_df, "font-colors.pdf", path_plot, other_info)
 
     # for scatter
     # with IMGFile() as path_plot:
@@ -48,3 +48,12 @@ with SparkDataFrame("FinancialApp") as spark_df:
     # with IMGFile() as path_plot:
     #     create_boxplot(pd_df, path_plot)
     #     single_report_pdf(pd_df, "font-colors.pdf", path_plot)
+
+    stock_x_df = file_df.select("Date")
+    stock_y_df = file_df.select("AMZN", "GOOG")
+    with IMGFile() as path_plot:
+        pandas_stock_x_df = stock_x_df.toPandas()
+        pandas_stock_y_df = stock_y_df.toPandas()
+        stock_graphic = StockGraphics(path_plot)
+        stock_graphic.create_multi_plot(pandas_stock_x_df, pandas_stock_y_df)
+        SingleReport().single_report_pdf(pandas_stock_y_df, "font-colors.pdf", path_plot)

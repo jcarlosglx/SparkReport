@@ -12,6 +12,7 @@ class StockGraphics:
     def __single_template(self, tittle: str, x_df: DataFrame, y_df: DataFrame) -> NoReturn:
         x_name = x_df.columns[0]
         y_name = y_df.columns[0]
+
         plt.figure(figsize=(self.x_figure, self.y_figure))
         plt.grid()
         plt.title(f"{tittle}")

@@ -12,7 +12,7 @@ class SquareReport(BaseReport, QuarterIMG):
     def square_report_pdf(self, pandas_df: DataFrame, path_pdf: str, paths_img: List[str]) -> NoReturn:
         x_name = pandas_df.columns[0]
         canvas = Canvas(path_pdf, pagesize=self.type_sheet)
-        self.set_tittle(canvas, f"Single report for {x_name} stock")
+        self.set_tittle(canvas, f"Square report for {x_name} stock")
         self.set_datetime(canvas)
         self.set_subtittle(canvas, f"Total data {pandas_df[x_name].count()}")
         for path_img in paths_img:

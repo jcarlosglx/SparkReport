@@ -3,6 +3,7 @@ from app.contextManager.img.imgFile import IMGFile
 from os.path import abspath, dirname, join
 from app.schemas.stockSchema import stock_schema
 from app.reports.singleReport import SingleReport
+from app.reports.squareReport import SquareReport
 from app.reports.quarterReport import QuarterReport
 from app.graphics.stockGraphics import StockGraphics
 
@@ -62,4 +63,4 @@ with SparkDataFrame("FinancialApp") as spark_df:
             pandas_single_stock = single_stock.toPandas()
             stock_graphic.set_path(path_hist)
             stock_graphic.create_histogram(pandas_single_stock)
-            QuarterReport().quarter_report_pdf(pandas_stock_y_df, "font-colors.pdf", [path_plot, path_hist, path_plot, path_hist, path_plot])
+            SquareReport().square_report_pdf(pandas_stock_y_df, "font-colors.pdf", [path_plot, path_hist, path_plot, path_hist, path_plot])

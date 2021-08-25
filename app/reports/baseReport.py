@@ -19,7 +19,7 @@ class BaseReport(TittleReport, SubTittleReport, InfoReport, DateReport):
         canvas.setFillColor(black)
         canvas.drawString(self.TITTLE_X, self.TITTLE_Y, f"{tittle}")
 
-    def set_datetime(self, canvas: Canvas):
+    def set_datetime(self, canvas: Canvas) -> NoReturn:
         canvas.setFont(self.DATE_FONT, self.DATE_FONT_SIZE)
         canvas.setFillColor(black)
         canvas.drawString(self.DATE_X, self.DATE_Y, f"{datetime.today().strftime('%Y-%m-%d')}")

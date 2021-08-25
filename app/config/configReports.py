@@ -1,4 +1,4 @@
-from reportlab.lib.units import cm
+from reportlab.lib.units import cm, inch
 from reportlab.lib.pagesizes import LEGAL
 from dataclasses import dataclass
 weight, hight = LEGAL
@@ -63,3 +63,22 @@ class SingleIMG:
     IMG_Y: int = 0
     IMG_SIZE_X: float = 22*cm
     IMG_SIZE_Y: float = 22*cm
+
+
+@dataclass
+class QuarterIMG:
+    IMG_X: int = 0
+    IMG_Y: int = 0
+    IMG_SIZE_X: float = 10*cm
+    IMG_SIZE_Y: float = 10*cm
+    MARGIN: float = 0.5*cm
+
+    def reset_coordinates(self):
+        self.IMG_X: int = 0
+        self.IMG_Y: int = 0
+
+    def next_quarter(self):
+        self.IMG_X = round(self.IMG_X + 10*cm + self.MARGIN)
+        if self.IMG_X > 500:
+            self.IMG_X = 0
+            self.IMG_Y = round(self.IMG_Y + 10*cm + self.MARGIN)

@@ -9,7 +9,7 @@ class StockGraphics:
         self.x_figure = x_figure
         self.y_figure = y_figure
 
-    def __single_template(self, tittle: str, x_df: DataFrame, y_df: DataFrame):
+    def __single_template(self, tittle: str, x_df: DataFrame, y_df: DataFrame) -> NoReturn:
         x_name = x_df.columns[0]
         y_name = y_df.columns[0]
         plt.figure(figsize=(self.x_figure, self.y_figure))
@@ -18,7 +18,7 @@ class StockGraphics:
         plt.ylabel(y_name)
         plt.xlabel(x_name)
 
-    def __multi_template(self, tittle: str, x_df: DataFrame, y_df: DataFrame):
+    def __multi_template(self, tittle: str, x_df: DataFrame, y_df: DataFrame) -> NoReturn:
         x_name = x_df.columns[0]
         y_name = str([f"{name} " for name in y_df.columns])
         plt.figure(figsize=(self.x_figure, self.y_figure))
@@ -26,6 +26,9 @@ class StockGraphics:
         plt.title(f"{tittle}")
         plt.ylabel(y_name)
         plt.xlabel(x_name)
+
+    def set_path(self, new_path: str) -> NoReturn:
+        self.path_img = new_path
 
     def get_statistics(self, pandas_df: DataFrame) -> dict:
         name = pandas_df.columns[0]

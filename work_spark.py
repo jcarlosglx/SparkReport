@@ -3,6 +3,7 @@ from app.contextManager.img.imgFile import IMGFile
 from os.path import abspath, dirname, join
 from app.schemas.stockSchema import stock_schema
 from app.reports.singleReport import SingleReport
+from app.reports.quarterReport import QuarterReport
 from app.graphics.stockGraphics import StockGraphics
 
 path_base = abspath(dirname(__file__))
@@ -56,4 +57,9 @@ with SparkDataFrame("FinancialApp") as spark_df:
         pandas_stock_y_df = stock_y_df.toPandas()
         stock_graphic = StockGraphics(path_plot)
         stock_graphic.create_multi_boxplot(pandas_stock_y_df)
-        SingleReport().single_report_pdf(pandas_stock_y_df, "font-colors.pdf", path_plot)
+        with IMGFile() as path_hist:
+            single_stock = file_df.select("AMZN")
+            pandas_single_stock = single_stock.toPandas()
+            stock_graphic.set_path(path_hist)
+            stock_graphic.create_histogram(pandas_single_stock)
+            QuarterReport().quarter_report_pdf(pandas_stock_y_df, "font-colors.pdf", [path_plot, path_hist, path_plot, path_hist, path_plot])

@@ -55,5 +55,5 @@ with SparkDataFrame("FinancialApp") as spark_df:
         pandas_stock_x_df = stock_x_df.toPandas()
         pandas_stock_y_df = stock_y_df.toPandas()
         stock_graphic = StockGraphics(path_plot)
-        stock_graphic.create_multi_plot(pandas_stock_x_df, pandas_stock_y_df)
+        stock_graphic.create_multi_boxplot(pandas_stock_y_df)
         SingleReport().single_report_pdf(pandas_stock_y_df, "font-colors.pdf", path_plot)

@@ -1,4 +1,4 @@
-from typing import NoReturn, List
+from typing import NoReturn
 from pandas import DataFrame
 import matplotlib.pyplot as plt
 
@@ -32,7 +32,7 @@ class StockGraphics:
         return {
             "mean": pandas_df[name].mean(),
             "median": pandas_df[name].median(),
-            "mode": pandas_df[name].mode()[0],
+            "mode": round(pandas_df[name].mode()[0], 5),
             "std": pandas_df[name].std(),
             "max": pandas_df[name].max(),
             "min": pandas_df[name].min()
@@ -48,6 +48,12 @@ class StockGraphics:
     def create_boxplot(self, pandas_df: DataFrame) -> NoReturn:
         self.__single_template("Plotting Stocks", pandas_df, pandas_df)
         plt.boxplot(pandas_df)
+        plt.savefig(self.path_img)
+
+    def create_multi_boxplot(self, pandas_df: DataFrame) -> NoReturn:
+        self.__multi_template("Plotting Stocks", pandas_df, pandas_df)
+        labels = [f"{name}" for name in pandas_df.columns]
+        plt.boxplot(pandas_df, labels=labels)
         plt.savefig(self.path_img)
 
     def create_scatter(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame) -> NoReturn:

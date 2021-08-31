@@ -10,5 +10,5 @@ class QuarterReportSchema(Schema):
     multi_boxplot: Dict[str, str] = fields.Dict(keys=fields.String(), values=fields.List(fields.String()))
     multi_plot: Dict[str, str] = fields.Dict(keys=fields.String(), values=fields.List(fields.String()))
     statistics: bool = fields.Boolean()
-    x: str = fields.String(required=True)
+    x: str = fields.String()
     y: List[str] = fields.List(fields.String(), required=True)

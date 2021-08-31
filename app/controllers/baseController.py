@@ -57,7 +57,7 @@ class BaseController:
                 results.append(method(data[NamesGraphics.X_Axis], data[NamesGraphics.Y_Axis], paths[i]))
         return results
 
-    def get_report(self) -> Response:
+    def send_report(self) -> Response:
         self.data_json = request.get_json()
         schema = self.schema()
         schema.load(self.data_json, partial=True)

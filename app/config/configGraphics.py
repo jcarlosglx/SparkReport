@@ -1,15 +1,14 @@
 from dataclasses import dataclass
-from typing import Tuple
 
 
 @dataclass
-class TypesGraphics:
-    TypesGraphics: Tuple[str] = (
-        "Histogram",
-        "Boxplot",
-        "Multi-Boxplot",
-        "Scatter",
-        "Plot",
-        "Multi-Plot",
-        "Statistics",
-    )
+class NamesGraphics:
+    Histogram = "histogram"
+    Boxplot = "boxplot"
+    MultiBoxplot = "multi_boxplot"
+    Scatter = "scatter"
+    Plot = "Plot"
+    MultiPlot = "multi_plot"
+    Statistics = "statistics"
+    X_Axis = "x"
+    Y_Axis = "y"

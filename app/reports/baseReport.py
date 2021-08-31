@@ -3,16 +3,22 @@ from datetime import datetime
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.lib.colors import blue, black, brown
 from reportlab.lib.pagesizes import LEGAL
-from typing import NoReturn
+from abc import ABC, abstractmethod
+from typing import NoReturn, List, Optional
+from pandas import DataFrame
 
 
-class BaseReport(TittleReport, SubTittleReport, InfoReport, DateReport):
+class BaseReport(TittleReport, SubTittleReport, InfoReport, DateReport, ABC):
     def __init__(self, type_sheet: tuple = LEGAL):
         self.type_sheet = type_sheet
         if type_sheet != LEGAL:
             self.recalculate_subtittle(type_sheet)
             self.recalculate_tittle(type_sheet)
             self.recalculate_info(type_sheet)
+
+    @abstractmethod
+    def create_report(self, pandas_df: DataFrame, path_pdf: str, path_img: List[str], other_info: Optional[dict] = None) -> NoReturn:
+        pass
 
     def set_tittle(self, canvas: Canvas, tittle: str) -> NoReturn:
         canvas.setFont(self.TITTLE_FONT, self.TITTLE_FONT_SIZE)

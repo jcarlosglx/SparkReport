@@ -27,7 +27,7 @@ class StockGraphics:
         plt.ylabel(y_name)
         plt.xlabel(x_name)
 
-    def get_statistics(self, pandas_df: DataFrame) -> dict:
+    def statistics(self, pandas_df: DataFrame) -> dict:
         try:
             name = pandas_df.columns[0]
             return {
@@ -41,7 +41,7 @@ class StockGraphics:
         except:
             return {}
 
-    def create_histogram(self, pandas_df: DataFrame, path: str) -> bool:
+    def histogram(self, pandas_df: DataFrame, path: str) -> bool:
         try:
             x_name = pandas_df.columns[0]
             self.__single_template("Histogram Stock", pandas_df, pandas_df)
@@ -52,7 +52,7 @@ class StockGraphics:
         except:
             return False
 
-    def create_boxplot(self, pandas_df: DataFrame, path: str) -> bool:
+    def boxplot(self, pandas_df: DataFrame, path: str) -> bool:
         try:
             self.__single_template("Plotting Stocks", pandas_df, pandas_df)
             plt.boxplot(pandas_df)
@@ -61,7 +61,7 @@ class StockGraphics:
         except:
             return False
 
-    def create_multi_boxplot(self, pandas_df: DataFrame, path: str) -> bool:
+    def multi_boxplot(self, pandas_df: DataFrame, path: str) -> bool:
         try:
             self.__multi_template("Plotting Stocks", pandas_df, pandas_df)
             labels = [f"{name}" for name in pandas_df.columns]
@@ -71,7 +71,7 @@ class StockGraphics:
         except:
             return False
 
-    def create_scatter(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str) -> bool:
+    def scatter(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str) -> bool:
         try:
             self.__single_template("Stock compare", pandas_x_df, pandas_y_df)
             plt.scatter(pandas_x_df, pandas_y_df)
@@ -79,7 +79,7 @@ class StockGraphics:
         except:
             return False
 
-    def create_plot(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str) -> bool:
+    def plot(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str) -> bool:
         try:
             self.__single_template("Plotting Stocks", pandas_x_df, pandas_y_df)
             name = pandas_y_df.columns[0]
@@ -90,7 +90,7 @@ class StockGraphics:
         except:
             return False
 
-    def create_multi_plot(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str) -> bool:
+    def multi_plot(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str) -> bool:
         try:
             self.__multi_template("Plotting Stocks", pandas_x_df, pandas_y_df)
             name = pandas_y_df.columns

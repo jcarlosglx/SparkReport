@@ -11,6 +11,7 @@ flask-sqlalchemy
 pyspark
 pandas
 matplotlib
+flask-marshmallow
 reportlab
 
 # Base requirements

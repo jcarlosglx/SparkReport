@@ -19,7 +19,7 @@ class BaseController:
     schema: Type[Schema]
     report: BaseReport
 
-    def are_create_graphics(self, result_graph: List[bool]) -> bool:
+    def are_create_graphics(self, result_graph: List) -> bool:
         for result in result_graph:
             if not result:
                 return False
@@ -47,14 +47,14 @@ class BaseController:
     def create_graphics(self, paths: List[str], data: Dict[str]) -> List[bool]:
         results = []
         stock_graphic = StockGraphics()
-        keys = data.keys()
+        x_axis = data.get(NamesGraphics.X_Axis)
+        y_axis = data.get(NamesGraphics.Y_Axis)
+        if x_axis:
+            data.pop(NamesGraphics.X_Axis)
+        if y_axis:
+            data.pop(NamesGraphics.Y_Axis)
         for i, graphic in enumerate(paths):
-            if NamesGraphics.X_Axis in keys:
-                method = getattr(stock_graphic, graphic)
-                results.append(method(data[NamesGraphics.Y_Axis], paths[i]))
-            elif (NamesGraphics.X_Axis in keys) and (NamesGraphics.Y_Axis in keys):
-                method = getattr(stock_graphic, graphic)
-                results.append(method(data[NamesGraphics.X_Axis], data[NamesGraphics.Y_Axis], paths[i]))
+            results.append(stock_graphic.create_graphic(graphic, paths[i], x_axis, y_axis))
         return results
 
     def send_report(self) -> Response:
@@ -62,13 +62,13 @@ class BaseController:
         schema = self.schema()
         schema.load(self.data_json, partial=True)
         types_graphics = self.data_json.keys()
-        with PathFiles(len(types_graphics)) as img_paths:
+        with PathFiles(len(types_graphics)) as path_files:
             data = self.get_spark_record(types_graphics)
-            results = self.create_graphics(img_paths, data)
+            results = self.create_graphics(path_files.paths, data)
             if self.are_create_graphics(results):
                 with PathFiles() as path_pdf:
-                    self.report.create_report(data[NamesGraphics.Y_Axis], path_pdf[0], img_paths, data[NamesGraphics.Statistics])
-                    return MessageReturn().access_record_message("")
+                    self.report.create_report(data[NamesGraphics.Y_Axis], path_pdf.paths[0], path_files.paths, data[NamesGraphics.Statistics])
+                    return MessageReturn().return_file(path_pdf.paths[0], path_files.names[0])
 
         return HandlerError.handler_middleware_error(InvalidGraphic())
 

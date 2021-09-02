@@ -1,4 +1,4 @@
-from typing import NoReturn
+from typing import NoReturn, Optional
 from pandas import DataFrame
 import matplotlib.pyplot as plt
 
@@ -27,6 +27,18 @@ class StockGraphics:
         plt.title(f"{tittle}")
         plt.ylabel(y_name)
         plt.xlabel(x_name)
+
+    def create_graphic(self, name_graphic: str, path: str, x_axis: Optional[str] = None, y_axis: Optional[str] = None) -> bool:
+        try:
+            if x_axis:
+                method = getattr(self, name_graphic)
+                method(y_axis, path)
+            elif x_axis and y_axis:
+                method = getattr(self, name_graphic)
+                method(x_axis, y_axis, path)
+                return True
+        except:
+            return False
 
     def statistics(self, pandas_df: DataFrame) -> dict:
         try:

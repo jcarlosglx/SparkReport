@@ -1,9 +1,10 @@
-from app.commands.runServer import RunServer
-from app.commands.runTests import RunTests
+from flask_script import Manager
+
 from app.commands.createData import CreateData
 from app.commands.initDB import InitDB
+from app.commands.runServer import RunServer
+from app.commands.runTests import RunTests
 from app.entryApp import create_app, get_config_app
-from flask_script import Manager
 from app.routes.blueprints import load_blueprints
 from app.services.healthCheckServer import HealthCheckServer
 

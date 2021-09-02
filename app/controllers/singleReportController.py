@@ -1,6 +1,6 @@
 from app.controllers.baseController import BaseController
-from app.schemas.singleReporteSchema import SingleReportSchema
 from app.reports.singleReport import SingleReport
+from app.schemas.singleReporteSchema import SingleReportSchema
 
 
 class SingleReportController(BaseController):

@@ -1,6 +1,6 @@
 from app.controllers.baseController import BaseController
-from app.schemas.quarterReporteSchema import QuarterReportSchema
 from app.reports.quarterReport import QuarterReport
+from app.schemas.quarterReporteSchema import QuarterReportSchema
 
 
 class QuarterReportController(BaseController):

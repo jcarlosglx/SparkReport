@@ -1,4 +1,4 @@
-from test.base_test.baseTest import BasePutTest, BaseGetGeneralTest
+from test.base_test.baseTest import BaseGetGeneralTest, BasePutTest
 from test.config.configTest import ConfigTest
 
 from app.messages.statusMessages import STATUS_405, STATUS_500

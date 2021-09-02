@@ -1,5 +1,6 @@
-from marshmallow import Schema, fields
 from typing import Dict, List
+
+from marshmallow import Schema, fields
 
 
 class SingleReportSchema(Schema):

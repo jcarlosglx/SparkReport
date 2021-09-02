@@ -4,8 +4,8 @@ from flask import Flask
 from werkzeug.exceptions import default_exceptions
 
 from app.config.configApp import AppConfig, config_app
-from app.config.configServer import ServerConfig, config_server
 from app.config.configDB import DBConfig, config_db
+from app.config.configServer import ServerConfig, config_server
 from app.exceptions.handler import HandlerError
 from app.middleware.middleware import Middleware
 from app.models.entryORM import db

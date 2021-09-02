@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+
 from app.config.configDB import DBConfig
 
 

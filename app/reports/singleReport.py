@@ -17,7 +17,7 @@ class SingleReport(BaseReport, SingleIMG):
         self,
         pandas_df: DataFrame,
         path_pdf: str,
-        path_img: List[str],
+        path_img: Optional[List[str]],
         other_info: Optional[dict] = None,
     ) -> NoReturn:
         x_name = pandas_df.columns[0]
@@ -27,5 +27,6 @@ class SingleReport(BaseReport, SingleIMG):
         self.set_subtittle(canvas, f"Total data {pandas_df[x_name].count()}")
         if other_info:
             self.set_info(canvas, other_info)
-        self.set_single_img(canvas, path_img[0])
+        if path_img:
+            self.set_single_img(canvas, path_img[0])
         canvas.save()

@@ -9,7 +9,7 @@ base_db = join(base_dir, "devDB.db")
 
 @dataclass
 class DBConfig(object):
-    STOCK_DB: str = join(Path(__file__).parent.parent, "/database/stock.csv")
+    STOCK_DB: str = f"{Path(__file__).resolve().parent.parent}/database/stock.csv"
     PATH: str = "sqlite:///" + base_db
     if environ.get("PATH_DB"):
         PATH: str = environ.get("PATH_DB")

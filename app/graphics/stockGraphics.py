@@ -37,14 +37,14 @@ class StockGraphics:
         self,
         name_graphic: str,
         path: str,
-        x_axis: Optional[str] = None,
-        y_axis: Optional[str] = None,
+        x_axis: Optional[DataFrame] = None,
+        y_axis: Optional[DataFrame] = None,
     ) -> bool:
         try:
-            if x_axis:
+            if not x_axis.empty:
                 method = getattr(self, name_graphic)
-                method(y_axis, path)
-            elif x_axis and y_axis:
+                method(x_axis, path)
+            elif not x_axis.empty and not y_axis.empty:
                 method = getattr(self, name_graphic)
                 method(x_axis, y_axis, path)
                 return True

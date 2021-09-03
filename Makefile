@@ -4,7 +4,7 @@
 help: ## Show all the commands
 	@awk 'BEGIN {FS = ":"} /^[a-zA-Z]+:.*?## / {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}' ${MAKEFILE_LIST}
 
-.PHONY: test
+.PHONY: testApp
 testApp: ## Start the suit of test for the app
 	@coverage run -m pytest test/
 	@coverage html -d report_html

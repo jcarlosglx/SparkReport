@@ -11,5 +11,5 @@ class SingleReportSchema(Schema):
     multi_boxplot: List[str] = fields.List(fields.String())
     multi_plot: List[str] = fields.List(fields.String())
     statistics: bool = fields.Boolean()
-    x: str = fields.String(required=True)
+    x: List[str] = fields.List(fields.String(required=True))
     y: List[str] = fields.List(fields.String())

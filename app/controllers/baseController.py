@@ -68,10 +68,10 @@ class BaseController:
                 )
         return dict_data
 
-    def create_graphics(self, paths: List[str], data: Dict) -> List[bool]:
+    def create_graphics(self, paths: List[str], data: Dict, graphics: List[str]) -> List[bool]:
         results = []
         stock_graphic = StockGraphics()
-        keys = data.keys()
+        keys = list(data.keys())
         x_axis = None
         y_axis = None
         has_x = NonGraphics.X_Axis in keys
@@ -81,9 +81,9 @@ class BaseController:
         if has_y:
             y_axis = data[NonGraphics.Y_Axis]
 
-        for i, graphic in enumerate(paths):
+        for path, graphic in zip(paths, graphics):
             results.append(
-                stock_graphic.create_graphic(graphic, paths[i], x_axis, y_axis)
+                stock_graphic.create_graphic(graphic, path, x_axis, y_axis)
             )
         return results
 
@@ -95,15 +95,16 @@ class BaseController:
         keys = list(self.data_json.keys())
         types_graphics = self.get_graphics(keys)
         columns = self.get_columns(keys)
-        with PathFiles(type_file="pdf") as path_pdf, PathFiles(n_paths=len(types_graphics), type_file="png") as path_img:
+        with PathFiles(type_file="pdf") as path_pdf,\
+                PathFiles(n_paths=len(types_graphics), type_file="png") as path_img:
             data = self.get_spark_record(columns)
-            results = self.create_graphics(path_img.paths, data)
+            results = self.create_graphics(path_img.paths, data, types_graphics)
 
             self.report().create_report(
                 data[NonGraphics.X_Axis],
                 path_pdf.paths[0],
                 path_img.paths,
-                data[NonGraphics.Statistics],
+                data.get(NonGraphics.Statistics),
             )
 
             if self.are_create_graphics(results):

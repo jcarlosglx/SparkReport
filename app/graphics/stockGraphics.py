@@ -44,6 +44,7 @@ class StockGraphics:
             if not x_axis.empty:
                 method = getattr(self, name_graphic)
                 method(x_axis, path)
+                return True
             elif not x_axis.empty and not y_axis.empty:
                 method = getattr(self, name_graphic)
                 method(x_axis, y_axis, path)

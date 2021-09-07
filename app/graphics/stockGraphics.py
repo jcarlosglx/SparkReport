@@ -41,14 +41,16 @@ class StockGraphics:
         y_axis: Optional[DataFrame] = None,
     ) -> bool:
         try:
-            if not x_axis.empty:
+            if isinstance(x_axis, DataFrame) and not isinstance(y_axis, DataFrame):
                 method = getattr(self, name_graphic)
                 method(x_axis, path)
                 return True
-            elif not x_axis.empty and not y_axis.empty:
+            elif isinstance(x_axis, DataFrame) and isinstance(y_axis, DataFrame):
                 method = getattr(self, name_graphic)
                 method(x_axis, y_axis, path)
                 return True
+            else:
+                return False
         except:
             return False
 

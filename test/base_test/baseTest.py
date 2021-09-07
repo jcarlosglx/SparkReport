@@ -90,3 +90,51 @@ class BaseGetGeneralTest:
         assert (
                 code_response == self.expect_status_get
         ), self.print_error(code_response)
+
+    def test_plot(self, get_app: Flask, get_db: Type[SQLAlchemy]):
+        json_data = {
+            "x": self.header_cvs[1],
+            "y": [self.header_cvs[2]],
+            "plot": [self.header_cvs[2]]
+        }
+        response = get_app.test_client().get(
+            f"{self.url_get}{self.endpoint_get}", json=json_data
+        )
+        if self.save_file:
+            self.save_response_file(response)
+        code_response = str(response.status_code)
+        assert (
+                code_response == self.expect_status_get
+        ), self.print_error(code_response)
+
+    def test_multi_plot(self, get_app: Flask, get_db: Type[SQLAlchemy]):
+        json_data = {
+            "x": self.header_cvs[1],
+            "y": [self.header_cvs[2]],
+            "multi_plot": [self.header_cvs[2]]
+        }
+        response = get_app.test_client().get(
+            f"{self.url_get}{self.endpoint_get}", json=json_data
+        )
+        if self.save_file:
+            self.save_response_file(response)
+        code_response = str(response.status_code)
+        assert (
+                code_response == self.expect_status_get
+        ), self.print_error(code_response)
+
+    def test_scatter(self, get_app: Flask, get_db: Type[SQLAlchemy]):
+        json_data = {
+            "x": self.header_cvs[1],
+            "y": [self.header_cvs[2]],
+            "scatter": [self.header_cvs[2]]
+        }
+        response = get_app.test_client().get(
+            f"{self.url_get}{self.endpoint_get}", json=json_data
+        )
+        if self.save_file:
+            self.save_response_file(response)
+        code_response = str(response.status_code)
+        assert (
+                code_response == self.expect_status_get
+        ), self.print_error(code_response)

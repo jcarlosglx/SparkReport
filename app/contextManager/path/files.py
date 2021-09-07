@@ -7,12 +7,13 @@ from uuid import uuid4
 
 
 class PathFiles:
-    def __init__(self, n_paths: int = 1, temp_dir: str = "/tmp/"):
+    def __init__(self, n_paths: int = 1, temp_dir: str = "/tmp/", type_file: str = "txt"):
         self.paths: List[str] = []
         self.dir: str = temp_dir
         self.names: List[str] = []
+        self.type_file: str = type_file
         for n in range(n_paths):
-            self.names.append(f"{uuid4()}.png")
+            self.names.append(f"{uuid4()}.{type_file}")
             self.paths.append(f"{temp_dir}{self.names[n]}")
 
     def __enter__(self) -> PathFiles:

@@ -11,7 +11,6 @@ from app.exceptions.handler import HandlerError
 from app.exceptions.InvalidGraphic import InvalidGraphic
 from app.graphics.stockGraphics import StockGraphics
 from app.messages.returnMessages import MessageReturn
-from app.reports.baseReport import BaseReport
 from app.schemas.stockSchema import stock_schema
 
 
@@ -96,19 +95,18 @@ class BaseController:
         keys = list(self.data_json.keys())
         types_graphics = self.get_graphics(keys)
         columns = self.get_columns(keys)
-        with PathFiles() as path_pdf, PathFiles(len(types_graphics)) as path_files:
+        with PathFiles(type_file="pdf") as path_pdf, PathFiles(n_paths=len(types_graphics), type_file="png") as path_img:
             data = self.get_spark_record(columns)
-            results = self.create_graphics(path_files.paths, data)
+            results = self.create_graphics(path_img.paths, data)
 
             self.report().create_report(
                 data[NonGraphics.X_Axis],
                 path_pdf.paths[0],
-                path_files.paths,
+                path_img.paths,
                 data[NonGraphics.Statistics],
             )
 
             if self.are_create_graphics(results):
-                return MessageReturn().return_message()
-                # return MessageReturn().return_file(path_pdf.paths[0], path_files.names[0])
+                return MessageReturn().return_file(path_pdf.dir, path_pdf.names[0])
 
         return HandlerError.handler_middleware_error(InvalidGraphic())

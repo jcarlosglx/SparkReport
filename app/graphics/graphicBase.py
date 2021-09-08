@@ -4,13 +4,13 @@ import matplotlib.pyplot as plt
 from pandas import DataFrame
 
 
-class StockGraphics:
+class GraphicBase:
     def __init__(self, x_figure: int = 10, y_figure: int = 10):
         self.x_figure = x_figure
         self.y_figure = y_figure
         self.FIRST = 0
 
-    def __single_template(
+    def _single_template(
         self, tittle: str, x_df: DataFrame, y_df: DataFrame
     ) -> NoReturn:
         x_name = x_df.columns[self.FIRST]
@@ -22,7 +22,7 @@ class StockGraphics:
         plt.ylabel(y_name)
         plt.xlabel(x_name)
 
-    def __multi_template(
+    def _multi_template(
         self, tittle: str, x_df: DataFrame, y_df: DataFrame
     ) -> NoReturn:
         x_name = x_df.columns[self.FIRST]
@@ -41,12 +41,14 @@ class StockGraphics:
         y_axis: Optional[DataFrame] = None,
     ) -> bool:
         try:
+            for cls in GraphicBase.__subclasses__():
+                if cls.__name__ == name_graphic:
+                    obj = cls()
             if isinstance(x_axis, DataFrame) and not isinstance(y_axis, DataFrame):
-                method = getattr(self, name_graphic)
-                method(x_axis, path)
-                return True
+                method = getattr(obj, name_graphic)
+                return method(x_axis, path)
             elif isinstance(x_axis, DataFrame) and isinstance(y_axis, DataFrame):
-                method = getattr(self, name_graphic)
+                method = getattr(obj, name_graphic)
                 method(x_axis, y_axis, path)
                 return True
             else:
@@ -54,6 +56,8 @@ class StockGraphics:
         except:
             return False
 
+
+class statistics(GraphicBase):
     def statistics(self, pandas_df: DataFrame) -> dict:
         try:
             name = pandas_df.columns[self.FIRST]
@@ -68,10 +72,12 @@ class StockGraphics:
         except:
             return {}
 
+
+class histogram(GraphicBase):
     def histogram(self, pandas_df: DataFrame, path: str) -> bool:
         try:
             x_name = pandas_df.columns[self.FIRST]
-            self.__single_template("Histogram Stock", pandas_df, pandas_df)
+            self._single_template("Histogram Stock", pandas_df, pandas_df)
             num_bins = 40
             plt.hist(pandas_df[x_name], num_bins, facecolor="blue")
             plt.savefig(path)
@@ -79,18 +85,22 @@ class StockGraphics:
         except:
             return False
 
+
+class boxplot(GraphicBase):
     def boxplot(self, pandas_df: DataFrame, path: str) -> bool:
         try:
-            self.__single_template("Plotting Stocks", pandas_df, pandas_df)
+            self._single_template("Plotting Stocks", pandas_df, pandas_df)
             plt.boxplot(pandas_df)
             plt.savefig(path)
             return True
         except:
             return False
 
+
+class multi_boxplot(GraphicBase):
     def multi_boxplot(self, pandas_df: DataFrame, path: str) -> bool:
         try:
-            self.__multi_template("Plotting Stocks", pandas_df, pandas_df)
+            self._multi_template("Plotting Stocks", pandas_df, pandas_df)
             labels = [f"{name}" for name in pandas_df.columns]
             plt.boxplot(pandas_df, labels=labels)
             plt.savefig(path)
@@ -98,19 +108,23 @@ class StockGraphics:
         except:
             return False
 
+
+class scatter(GraphicBase):
     def scatter(
-        self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str
+            self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str
     ) -> bool:
         try:
-            self.__single_template("Stock compare", pandas_x_df, pandas_y_df)
+            self._single_template("Stock compare", pandas_x_df, pandas_y_df)
             plt.scatter(pandas_x_df, pandas_y_df)
             plt.savefig(path)
         except:
             return False
 
+
+class plot(GraphicBase):
     def plot(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str) -> bool:
         try:
-            self.__single_template("Plotting Stocks", pandas_x_df, pandas_y_df)
+            self._single_template("Plotting Stocks", pandas_x_df, pandas_y_df)
             name = pandas_y_df.columns[self.FIRST]
             plt.plot(pandas_x_df, pandas_y_df, label=name, linewidth=3)
             plt.legend(loc="upper left")
@@ -119,11 +133,13 @@ class StockGraphics:
         except:
             return False
 
+
+class multi_plot(GraphicBase):
     def multi_plot(
-        self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str
+            self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str
     ) -> bool:
         try:
-            self.__multi_template("Plotting Stocks", pandas_x_df, pandas_y_df)
+            self._multi_template("Plotting Stocks", pandas_x_df, pandas_y_df)
             name = pandas_y_df.columns
             plt.plot(pandas_x_df, pandas_y_df, label=name, linewidth=3)
             plt.legend(loc="upper left")
@@ -131,3 +147,4 @@ class StockGraphics:
             return True
         except:
             return False
+

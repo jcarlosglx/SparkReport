@@ -7,7 +7,7 @@ from app.config.configGraphics import NonGraphics, Graphics
 from app.contextManager.path.files import PathFiles
 from app.exceptions.handler import HandlerError
 from app.exceptions.InvalidGraphic import InvalidGraphic
-from app.graphics.stockGraphics import StockGraphics
+from app.graphics.graphicBase import GraphicBase
 from app.messages.returnMessages import MessageReturn
 from app.spark.sparkDF import SparkDF
 
@@ -33,7 +33,7 @@ class BaseController:
 
     def create_graphics(self, paths: List[str], data: Dict, graphics: List[str]) -> List[bool]:
         results = []
-        stock_graphic = StockGraphics()
+        stock_graphic = GraphicBase()
         x_axis = data.get(NonGraphics.X_Axis)
         y_axis = data.get(NonGraphics.Y_Axis)
 
@@ -52,19 +52,18 @@ class BaseController:
         types_graphics = self.get_graphics(keys)
         spark = SparkDF()
         columns = spark.get_columns(keys)
-        with PathFiles(type_file="pdf") as path_pdf,\
+        with PathFiles(type_file="pdf") as path_pdf, \
                 PathFiles(n_paths=len(types_graphics), type_file="png") as path_img:
             data = spark.get_spark_record(columns, self.data_json)
             results = self.create_graphics(path_img.paths, data, types_graphics)
-
-            self.report().create_report(
-                data[NonGraphics.X_Axis],
-                path_pdf.paths[0],
-                path_img.paths,
-                data.get(NonGraphics.Statistics),
-            )
-
             if self.are_create_graphics(results):
+                self.report().create_report(
+                    data[NonGraphics.X_Axis],
+                    path_pdf.paths[0],
+                    path_img.paths,
+                    data.get(NonGraphics.Statistics),
+                )
+
                 return MessageReturn().return_file(path_pdf.dir, path_pdf.names[0])
 
         return HandlerError.handler_middleware_error(InvalidGraphic())

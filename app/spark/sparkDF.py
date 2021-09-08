@@ -2,7 +2,7 @@ from app.contextManager.spark.sparkDF import SparkDataFrame
 from app.config.configDB import DBConfig
 from app.schemas.stockSchema import stock_schema
 from typing import List, Dict
-from app.graphics.stockGraphics import StockGraphics
+from app.graphics.graphicBase import statistics
 from app.config.configGraphics import NonGraphics
 
 
@@ -39,7 +39,7 @@ class SparkDF:
                 ).toPandas()
 
             if NonGraphics.Statistics in types_graphics:
-                dict_data[NonGraphics.Statistics] = StockGraphics().statistics(
+                dict_data[NonGraphics.Statistics] = statistics().statistics(
                     dict_data[NonGraphics.X_Axis]
                 )
         return dict_data

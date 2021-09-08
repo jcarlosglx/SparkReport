@@ -60,7 +60,8 @@ class GraphicName:
     ) -> bool:
         try:
 
-            if obj := self._get_class(name_graphic):
+            obj = self._get_class(name_graphic)
+            if not obj:
                 return False
 
             if isinstance(x_axis, DataFrame) and not isinstance(y_axis, DataFrame):

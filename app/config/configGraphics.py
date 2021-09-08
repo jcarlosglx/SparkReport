@@ -1,12 +1,12 @@
 from dataclasses import dataclass, fields
 from typing import List
 
-from app.graphics.graphics import GraphicBase
+from app.graphics.graphics import GraphicName
 
 
 @dataclass
 class Graphics:
-    Graphics_Allow = [cls.__name__ for cls in GraphicBase.__subclasses__()]
+    Graphics_Allow = [cls.__name__ for cls in GraphicName().classes]
 
 
 @dataclass

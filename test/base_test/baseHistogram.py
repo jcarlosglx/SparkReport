@@ -1,13 +1,15 @@
 from test.base_test.baseTest import BaseGetGeneralTest
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from typing import Type
+from typing import Type, List
 
 
 class BaseGetHistogramTest(BaseGetGeneralTest):
+    X_Axis: List[str] = [BaseGetGeneralTest.header_cvs[1]]
+
     def test_get_histogram(self, get_app: Flask, get_db: Type[SQLAlchemy]):
         json_data = {
-            "x": [self.header_cvs[1]],
+            "x": self.X_Axis,
             "histogram": [self.header_cvs[2]]
         }
         response = get_app.test_client().get(

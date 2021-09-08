@@ -17,7 +17,6 @@ class BaseGetGeneralTest:
     endpoint_get: str
     path_files: str = f"{Path(__file__).resolve().parent.parent}/files/"
     response_key: str = ConfigTest.response_key
-    schema_general_get: Type[Schema]
     header_cvs = list(stock_schema.fieldNames())
     save_file: bool = False
 

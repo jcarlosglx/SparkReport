@@ -1,14 +1,17 @@
 from test.base_test.baseTest import BaseGetGeneralTest
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from typing import Type
+from typing import Type, List
 
 
 class BaseGetPlotTest(BaseGetGeneralTest):
+    X_Axis: List[str] = [BaseGetGeneralTest.header_cvs[0]]
+    Y_Axis: List[str] = [BaseGetGeneralTest.header_cvs[1]]
+
     def test_get_plot(self, get_app: Flask, get_db: Type[SQLAlchemy]):
         json_data = {
-            "x": [self.header_cvs[1]],
-            "y": [self.header_cvs[2]],
+            "x": self.X_Axis,
+            "y": self.Y_Axis,
             "plot": [self.header_cvs[2]]
         }
         response = get_app.test_client().get(
@@ -23,10 +26,13 @@ class BaseGetPlotTest(BaseGetGeneralTest):
 
 
 class BaseGetMultiPlotTest(BaseGetGeneralTest):
+    X_Axis: List[str] = [BaseGetGeneralTest.header_cvs[0]]
+    Y_Axis: List[str] = [BaseGetGeneralTest.header_cvs[1]]
+
     def test_get_multi_plot_one_y(self, get_app: Flask, get_db: Type[SQLAlchemy]):
         json_data = {
-            "x": [self.header_cvs[1]],
-            "y": [self.header_cvs[2]],
+            "x": self.X_Axis,
+            "y": self.Y_Axis,
             "multi_plot": [self.header_cvs[2]]
         }
         response = get_app.test_client().get(
@@ -40,9 +46,10 @@ class BaseGetMultiPlotTest(BaseGetGeneralTest):
         ), self.print_error(code_response)
 
     def test_get_multi_plot_two_y(self, get_app: Flask, get_db: Type[SQLAlchemy]):
+        self.Y_Axis = [self.header_cvs[1], self.header_cvs[2]]
         json_data = {
-            "x": [self.header_cvs[0]],
-            "y": [self.header_cvs[1], self.header_cvs[2]],
+            "x": self.X_Axis,
+            "y": self.Y_Axis,
             "multi_plot": [self.header_cvs[2]]
         }
         response = get_app.test_client().get(

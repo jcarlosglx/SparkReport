@@ -1,13 +1,14 @@
 from test.base_test.baseTest import BaseGetGeneralTest
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from typing import Type
+from typing import Type, List
 
 
 class BaseGetScatterTest(BaseGetGeneralTest):
+    X_Axis: List[str] = [BaseGetGeneralTest.header_cvs[1]]
     def test_get_scatter(self, get_app: Flask, get_db: Type[SQLAlchemy]):
         json_data = {
-            "x": [self.header_cvs[1]],
+            "x": self.X_Axis,
             "y": [self.header_cvs[2]],
             "scatter": [self.header_cvs[2]]
         }

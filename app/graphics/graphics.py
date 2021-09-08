@@ -1,5 +1,5 @@
-from abc import abstractmethod
-from typing import NoReturn, Optional
+from abc import ABC, abstractmethod
+from typing import NoReturn, Optional, Union
 
 import matplotlib.pyplot as plt
 from pandas import DataFrame
@@ -38,24 +38,35 @@ class GraphicBase:
         plt.ylabel(y_name)
         plt.xlabel(x_name)
 
-    def create_element(self):
-        pass
+
+class GraphicName:
+
+    def __init__(self):
+        self.classes = list(OneDimensionGraphic.__subclasses__())
+        self.classes.extend(list(TwoDimensionGraphic.__subclasses__()))
+
+    def _get_class(self, name_graphic: str) -> Union[object, bool]:
+        for cls in self.classes:
+            if cls.__name__ == name_graphic:
+                return cls()
+        return False
 
     def create_graphic(
-        self,
-        name_graphic: str,
-        path: str,
-        x_axis: Optional[DataFrame] = None,
-        y_axis: Optional[DataFrame] = None,
+            self,
+            name_graphic: str,
+            path: str,
+            x_axis: Optional[DataFrame] = None,
+            y_axis: Optional[DataFrame] = None,
     ) -> bool:
         try:
-            for cls in GraphicBase.__subclasses__():
-                if cls.__name__ == name_graphic:
-                    obj = cls()
-                    break
+
+            if obj := self._get_class(name_graphic):
+                return False
+
             if isinstance(x_axis, DataFrame) and not isinstance(y_axis, DataFrame):
                 method = getattr(obj, "create")
                 return method(x_axis, path)
+
             elif isinstance(x_axis, DataFrame) and isinstance(y_axis, DataFrame):
                 method = getattr(obj, "create")
                 method(x_axis, y_axis, path)
@@ -66,7 +77,25 @@ class GraphicBase:
             return False
 
 
-class Statistics(NonGraphicsBase):
+class OneDimensionGraphic(ABC, GraphicBase):
+    @abstractmethod
+    def create(self, pandas_df: DataFrame, path: str) -> bool:
+        pass
+
+
+class TwoDimensionGraphic(ABC, GraphicBase):
+    @abstractmethod
+    def create(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str) -> bool:
+        pass
+
+
+class DataInformation(ABC, GraphicBase):
+    @abstractmethod
+    def create(self, pandas_df: DataFrame) -> dict:
+        pass
+
+
+class Statistics(DataInformation):
     def create(self, pandas_df: DataFrame) -> dict:
         try:
             name = pandas_df.columns[self.FIRST]
@@ -82,7 +111,7 @@ class Statistics(NonGraphicsBase):
             return {}
 
 
-class Histogram(GraphicBase):
+class Histogram(OneDimensionGraphic):
     def create(self, pandas_df: DataFrame, path: str) -> bool:
         try:
             x_name = pandas_df.columns[self.FIRST]
@@ -95,7 +124,7 @@ class Histogram(GraphicBase):
             return False
 
 
-class BoxPlot(GraphicBase):
+class BoxPlot(OneDimensionGraphic):
     def create(self, pandas_df: DataFrame, path: str) -> bool:
         try:
             self._single_template("Plotting Stocks", pandas_df, pandas_df)
@@ -106,7 +135,7 @@ class BoxPlot(GraphicBase):
             return False
 
 
-class MultiBoxPlot(GraphicBase):
+class MultiBoxPlot(OneDimensionGraphic):
     def create(self, pandas_df: DataFrame, path: str) -> bool:
         try:
             self._multi_template("Plotting Stocks", pandas_df, pandas_df)
@@ -118,7 +147,7 @@ class MultiBoxPlot(GraphicBase):
             return False
 
 
-class Scatter(GraphicBase):
+class Scatter(TwoDimensionGraphic):
     def create(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str) -> bool:
         try:
             self._single_template("Stock compare", pandas_x_df, pandas_y_df)
@@ -128,7 +157,7 @@ class Scatter(GraphicBase):
             return False
 
 
-class Plot(GraphicBase):
+class Plot(TwoDimensionGraphic):
     def create(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str) -> bool:
         try:
             self._single_template("Plotting Stocks", pandas_x_df, pandas_y_df)
@@ -141,7 +170,7 @@ class Plot(GraphicBase):
             return False
 
 
-class MultiPlot(GraphicBase):
+class MultiPlot(TwoDimensionGraphic):
     def create(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str) -> bool:
         try:
             self._multi_template("Plotting Stocks", pandas_x_df, pandas_y_df)

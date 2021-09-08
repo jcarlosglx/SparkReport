@@ -7,7 +7,7 @@ from app.config.configGraphics import Graphics, NonGraphics
 from app.contextManager.path.files import PathFiles
 from app.exceptions.handler import HandlerError
 from app.exceptions.InvalidGraphic import InvalidGraphic
-from app.graphics.graphics import GraphicBase
+from app.graphics.graphics import GraphicName
 from app.messages.returnMessages import MessageReturn
 from app.spark.sparkDF import SparkDF
 
@@ -24,18 +24,14 @@ class BaseController:
         return True
 
     def get_graphics(self, graphics: List[str]) -> List[str]:
-        names = []
-        keys = Graphics.Graphics_Allow
-        for graphic in graphics:
-            if graphic in keys:
-                names.append(graphic)
-        return names
+        graphic_allow = Graphics.Graphics_Allow
+        return [graphic for graphic in graphics if graphic in graphic_allow]
 
     def create_graphics(
         self, paths: List[str], data: Dict, graphics: List[str]
     ) -> List[bool]:
         results = []
-        stock_graphic = GraphicBase()
+        stock_graphic = GraphicName()
         x_axis = data.get(NonGraphics.X_Axis)
         y_axis = data.get(NonGraphics.Y_Axis)
 

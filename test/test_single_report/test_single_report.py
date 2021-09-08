@@ -6,7 +6,6 @@ from test.base_test.baseScatter import BaseGetScatterTest
 
 from app.config.configEndpoint import EndpointConfig
 from app.messages.statusMessages import STATUS_200
-from app.schemas.singleReporteSchema import SingleReportSchema
 
 
 class TestSingleReportHistogram(BaseGetHistogramTest):

@@ -3,15 +3,13 @@ from typing import Dict, List, Type
 from flask import Response, request
 from marshmallow import Schema
 
-from app.config.configDB import DBConfig
 from app.config.configGraphics import NonGraphics, Graphics
 from app.contextManager.path.files import PathFiles
-from app.contextManager.spark.sparkDF import SparkDataFrame
 from app.exceptions.handler import HandlerError
 from app.exceptions.InvalidGraphic import InvalidGraphic
 from app.graphics.stockGraphics import StockGraphics
 from app.messages.returnMessages import MessageReturn
-from app.schemas.stockSchema import stock_schema
+from app.spark.sparkDF import SparkDF
 
 
 class BaseController:
@@ -33,53 +31,11 @@ class BaseController:
                 names.append(graphic)
         return names
 
-    def get_columns(self, graphics: List[str]) -> List[str]:
-        names = []
-        keys = NonGraphics.get_values()
-        for graphic in graphics:
-            if graphic in keys:
-                names.append(graphic)
-        return names
-
-    def get_spark_record(self, types_graphics: List[str]) -> Dict:
-        dict_data = {}
-        with SparkDataFrame() as spark_df:
-            file_df = (
-                spark_df.spark_session.read.format("csv")
-                .option("header", True)
-                .option("delimiter", ",")
-                .schema(stock_schema)
-                .load(DBConfig.STOCK_DB)
-            )
-            has_x = NonGraphics.X_Axis in types_graphics
-            has_y = NonGraphics.Y_Axis in types_graphics
-            has_statistics = NonGraphics.Statistics in types_graphics
-            if has_x:
-                dict_data[NonGraphics.X_Axis] = file_df.select(
-                    self.data_json[NonGraphics.X_Axis]
-                ).toPandas()
-            if has_y:
-                dict_data[NonGraphics.Y_Axis] = file_df.select(
-                    self.data_json[NonGraphics.Y_Axis]
-                ).toPandas()
-            if has_statistics:
-                dict_data[NonGraphics.Statistics] = StockGraphics().statistics(
-                    dict_data[NonGraphics.X_Axis]
-                )
-        return dict_data
-
     def create_graphics(self, paths: List[str], data: Dict, graphics: List[str]) -> List[bool]:
         results = []
         stock_graphic = StockGraphics()
-        keys = list(data.keys())
-        x_axis = None
-        y_axis = None
-        has_x = NonGraphics.X_Axis in keys
-        has_y = NonGraphics.Y_Axis in keys
-        if has_x:
-            x_axis = data[NonGraphics.X_Axis]
-        if has_y:
-            y_axis = data[NonGraphics.Y_Axis]
+        x_axis = data.get(NonGraphics.X_Axis)
+        y_axis = data.get(NonGraphics.Y_Axis)
 
         for path, graphic in zip(paths, graphics):
             results.append(
@@ -94,10 +50,11 @@ class BaseController:
 
         keys = list(self.data_json.keys())
         types_graphics = self.get_graphics(keys)
-        columns = self.get_columns(keys)
+        spark = SparkDF()
+        columns = spark.get_columns(keys)
         with PathFiles(type_file="pdf") as path_pdf,\
                 PathFiles(n_paths=len(types_graphics), type_file="png") as path_img:
-            data = self.get_spark_record(columns)
+            data = spark.get_spark_record(columns, self.data_json)
             results = self.create_graphics(path_img.paths, data, types_graphics)
 
             self.report().create_report(

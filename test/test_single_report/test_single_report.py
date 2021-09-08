@@ -1,8 +1,9 @@
-from test.base_test.basePlot import BaseGetPlotTest, BaseGetMultiPlotTest
-from test.base_test.baseBoxPlot import BaseGetBoxPlotTest, BaseGetMultiBoxPlotTest
+from test.base_test.baseBoxPlot import (BaseGetBoxPlotTest,
+                                        BaseGetMultiBoxPlotTest)
 from test.base_test.baseHistogram import BaseGetHistogramTest
-from test.base_test.baseStatistics import BaseGetStatisticsTest
+from test.base_test.basePlot import BaseGetMultiPlotTest, BaseGetPlotTest
 from test.base_test.baseScatter import BaseGetScatterTest
+from test.base_test.baseStatistics import BaseGetStatisticsTest
 
 from app.config.configEndpoint import EndpointConfig
 from app.messages.statusMessages import STATUS_200

@@ -7,7 +7,9 @@ from uuid import uuid4
 
 
 class PathFiles:
-    def __init__(self, n_paths: int = 1, temp_dir: str = "/tmp/", type_file: str = "txt"):
+    def __init__(
+        self, n_paths: int = 1, temp_dir: str = "/tmp/", type_file: str = "txt"
+    ):
         self.paths: List[str] = []
         self.dir: str = temp_dir
         self.names: List[str] = []

@@ -3,11 +3,11 @@ from typing import Dict, List, Type
 from flask import Response, request
 from marshmallow import Schema
 
-from app.config.configGraphics import NonGraphics, Graphics
+from app.config.configGraphics import Graphics, NonGraphics
 from app.contextManager.path.files import PathFiles
 from app.exceptions.handler import HandlerError
 from app.exceptions.InvalidGraphic import InvalidGraphic
-from app.graphics.graphicBase import GraphicBase
+from app.graphics.graphics import GraphicBase
 from app.messages.returnMessages import MessageReturn
 from app.spark.sparkDF import SparkDF
 
@@ -25,22 +25,22 @@ class BaseController:
 
     def get_graphics(self, graphics: List[str]) -> List[str]:
         names = []
-        keys = Graphics.get_values()
+        keys = Graphics.Graphics_Allow
         for graphic in graphics:
             if graphic in keys:
                 names.append(graphic)
         return names
 
-    def create_graphics(self, paths: List[str], data: Dict, graphics: List[str]) -> List[bool]:
+    def create_graphics(
+        self, paths: List[str], data: Dict, graphics: List[str]
+    ) -> List[bool]:
         results = []
         stock_graphic = GraphicBase()
         x_axis = data.get(NonGraphics.X_Axis)
         y_axis = data.get(NonGraphics.Y_Axis)
 
         for path, graphic in zip(paths, graphics):
-            results.append(
-                stock_graphic.create_graphic(graphic, path, x_axis, y_axis)
-            )
+            results.append(stock_graphic.create_graphic(graphic, path, x_axis, y_axis))
         return results
 
     def send_report(self) -> Response:
@@ -52,8 +52,9 @@ class BaseController:
         types_graphics = self.get_graphics(keys)
         spark = SparkDF()
         columns = spark.get_columns(keys)
-        with PathFiles(type_file="pdf") as path_pdf, \
-                PathFiles(n_paths=len(types_graphics), type_file="png") as path_img:
+        with PathFiles(type_file="pdf") as path_pdf, PathFiles(
+            n_paths=len(types_graphics), type_file="png"
+        ) as path_img:
             data = spark.get_spark_record(columns, self.data_json)
             results = self.create_graphics(path_img.paths, data, types_graphics)
             if self.are_create_graphics(results):

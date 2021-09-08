@@ -1,14 +1,13 @@
 from pathlib import Path
-
 from test.config.configTest import ConfigTest
-from typing import Type, NoReturn
+from typing import NoReturn, Type
+from uuid import uuid4
 
 from flask import Response as FlaskResponse
 from marshmallow import Schema
-from uuid import uuid4
-from app.schemas.stockSchema import stock_schema
 
 from app.messages.statusMessages import STATUS_200
+from app.schemas.stockSchema import stock_schema
 
 
 class BaseGetGeneralTest:
@@ -27,5 +26,3 @@ class BaseGetGeneralTest:
     def print_error(self, code: str) -> NoReturn:
         print(f"Expected {self.expect_status_get} got {code}")
         print(f"Expected type {type(self.expect_status_get)} got {type(code)}")
-
-

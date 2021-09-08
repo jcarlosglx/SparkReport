@@ -1,24 +1,19 @@
 from dataclasses import dataclass, fields
 from typing import List
 
+from app.graphics.graphics import GraphicBase
+
+
 @dataclass
 class Graphics:
-    Histogram: str = "histogram"
-    Boxplot: str = "boxplot"
-    MultiBoxplot: str = "multi_boxplot"
-    Scatter: str = "scatter"
-    Plot: str = "plot"
-    MultiPlot: str = "multi_plot"
+    Graphics_Allow = [cls.__name__ for cls in GraphicBase.__subclasses__()]
 
-    @staticmethod
-    def get_values() -> List[str]:
-        return [getattr(Graphics, field.name) for field in fields(Graphics)]
 
 @dataclass
 class NonGraphics:
     X_Axis: str = "x"
     Y_Axis: str = "y"
-    Statistics: str = "statistics"
+    Statistics: str = "Statistics"
 
     @staticmethod
     def get_values() -> List[str]:

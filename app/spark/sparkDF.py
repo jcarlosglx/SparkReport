@@ -1,13 +1,13 @@
-from app.contextManager.spark.sparkDF import SparkDataFrame
+from typing import Dict, List
+
 from app.config.configDB import DBConfig
-from app.schemas.stockSchema import stock_schema
-from typing import List, Dict
-from app.graphics.graphicBase import statistics
 from app.config.configGraphics import NonGraphics
+from app.contextManager.spark.sparkDF import SparkDataFrame
+from app.graphics.graphics import Statistics
+from app.schemas.stockSchema import stock_schema
 
 
 class SparkDF:
-
     def get_columns(self, graphics: List[str]) -> List[str]:
         names = []
         keys = NonGraphics.get_values()
@@ -22,10 +22,10 @@ class SparkDF:
         with SparkDataFrame() as spark_df:
             file_df = (
                 spark_df.spark_session.read.format("csv")
-                    .option("header", True)
-                    .option("delimiter", ",")
-                    .schema(stock_schema)
-                    .load(DBConfig.STOCK_DB)
+                .option("header", True)
+                .option("delimiter", ",")
+                .schema(stock_schema)
+                .load(DBConfig.STOCK_DB)
             )
 
             if NonGraphics.X_Axis in types_graphics:
@@ -39,7 +39,7 @@ class SparkDF:
                 ).toPandas()
 
             if NonGraphics.Statistics in types_graphics:
-                dict_data[NonGraphics.Statistics] = statistics().statistics(
+                dict_data[NonGraphics.Statistics] = Statistics().create(
                     dict_data[NonGraphics.X_Axis]
                 )
         return dict_data

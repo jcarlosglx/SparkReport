@@ -1,7 +1,12 @@
+from abc import abstractmethod
 from typing import NoReturn, Optional
 
 import matplotlib.pyplot as plt
 from pandas import DataFrame
+
+
+class NonGraphicsBase:
+    FIRST = 0
 
 
 class GraphicBase:
@@ -33,6 +38,9 @@ class GraphicBase:
         plt.ylabel(y_name)
         plt.xlabel(x_name)
 
+    def create_element(self):
+        pass
+
     def create_graphic(
         self,
         name_graphic: str,
@@ -44,11 +52,12 @@ class GraphicBase:
             for cls in GraphicBase.__subclasses__():
                 if cls.__name__ == name_graphic:
                     obj = cls()
+                    break
             if isinstance(x_axis, DataFrame) and not isinstance(y_axis, DataFrame):
-                method = getattr(obj, name_graphic)
+                method = getattr(obj, "create")
                 return method(x_axis, path)
             elif isinstance(x_axis, DataFrame) and isinstance(y_axis, DataFrame):
-                method = getattr(obj, name_graphic)
+                method = getattr(obj, "create")
                 method(x_axis, y_axis, path)
                 return True
             else:
@@ -57,8 +66,8 @@ class GraphicBase:
             return False
 
 
-class statistics(GraphicBase):
-    def statistics(self, pandas_df: DataFrame) -> dict:
+class Statistics(NonGraphicsBase):
+    def create(self, pandas_df: DataFrame) -> dict:
         try:
             name = pandas_df.columns[self.FIRST]
             return {
@@ -73,8 +82,8 @@ class statistics(GraphicBase):
             return {}
 
 
-class histogram(GraphicBase):
-    def histogram(self, pandas_df: DataFrame, path: str) -> bool:
+class Histogram(GraphicBase):
+    def create(self, pandas_df: DataFrame, path: str) -> bool:
         try:
             x_name = pandas_df.columns[self.FIRST]
             self._single_template("Histogram Stock", pandas_df, pandas_df)
@@ -86,8 +95,8 @@ class histogram(GraphicBase):
             return False
 
 
-class boxplot(GraphicBase):
-    def boxplot(self, pandas_df: DataFrame, path: str) -> bool:
+class BoxPlot(GraphicBase):
+    def create(self, pandas_df: DataFrame, path: str) -> bool:
         try:
             self._single_template("Plotting Stocks", pandas_df, pandas_df)
             plt.boxplot(pandas_df)
@@ -97,8 +106,8 @@ class boxplot(GraphicBase):
             return False
 
 
-class multi_boxplot(GraphicBase):
-    def multi_boxplot(self, pandas_df: DataFrame, path: str) -> bool:
+class MultiBoxPlot(GraphicBase):
+    def create(self, pandas_df: DataFrame, path: str) -> bool:
         try:
             self._multi_template("Plotting Stocks", pandas_df, pandas_df)
             labels = [f"{name}" for name in pandas_df.columns]
@@ -109,10 +118,8 @@ class multi_boxplot(GraphicBase):
             return False
 
 
-class scatter(GraphicBase):
-    def scatter(
-            self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str
-    ) -> bool:
+class Scatter(GraphicBase):
+    def create(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str) -> bool:
         try:
             self._single_template("Stock compare", pandas_x_df, pandas_y_df)
             plt.scatter(pandas_x_df, pandas_y_df)
@@ -121,8 +128,8 @@ class scatter(GraphicBase):
             return False
 
 
-class plot(GraphicBase):
-    def plot(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str) -> bool:
+class Plot(GraphicBase):
+    def create(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str) -> bool:
         try:
             self._single_template("Plotting Stocks", pandas_x_df, pandas_y_df)
             name = pandas_y_df.columns[self.FIRST]
@@ -134,10 +141,8 @@ class plot(GraphicBase):
             return False
 
 
-class multi_plot(GraphicBase):
-    def multi_plot(
-            self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str
-    ) -> bool:
+class MultiPlot(GraphicBase):
+    def create(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str) -> bool:
         try:
             self._multi_template("Plotting Stocks", pandas_x_df, pandas_y_df)
             name = pandas_y_df.columns
@@ -147,4 +152,3 @@ class multi_plot(GraphicBase):
             return True
         except:
             return False
-

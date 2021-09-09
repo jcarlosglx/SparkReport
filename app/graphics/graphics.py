@@ -42,14 +42,41 @@ class GraphicBase:
 class GraphicName:
 
     def __init__(self):
-        self.classes = list(OneDimensionGraphic.__subclasses__())
-        self.classes.extend(list(TwoDimensionGraphic.__subclasses__()))
+        self.classes_graphics = list(OneDimensionGraphic.__subclasses__())
+        self.classes_graphics.extend(list(TwoDimensionGraphic.__subclasses__()))
 
-    def _get_class(self, name_graphic: str) -> Union[object, bool]:
-        for cls in self.classes:
+        self.classes_non_graphics = list(DataInformation.__subclasses__())
+
+    def _get_class_graphics(self, name_graphic: str) -> Union[object, bool]:
+        for cls in self.classes_graphics:
             if cls.__name__ == name_graphic:
                 return cls()
         return False
+
+    def _get_class_non_graphics(self, name_graphic: str) -> Union[object, bool]:
+        for cls in self.classes_graphics:
+            if cls.__name__ == name_graphic:
+                return cls()
+        return False
+
+    def create_non_graphic(
+            self,
+            name_non_graphic: str,
+            x_axis: Optional[DataFrame] = None,
+    ) -> dict:
+        try:
+
+            obj = self._get_class_non_graphics(name_non_graphic)
+            if not obj:
+                return {}
+
+            if isinstance(x_axis, DataFrame):
+                method = getattr(obj, "create")
+                return method(x_axis)
+            else:
+                return {}
+        except:
+            return {}
 
     def create_graphic(
             self,
@@ -60,7 +87,7 @@ class GraphicName:
     ) -> bool:
         try:
 
-            obj = self._get_class(name_graphic)
+            obj = self._get_class_graphics(name_graphic)
             if not obj:
                 return False
 
@@ -123,6 +150,8 @@ class Histogram(OneDimensionGraphic):
             return True
         except:
             return False
+        finally:
+            plt.close()
 
 
 class BoxPlot(OneDimensionGraphic):
@@ -134,6 +163,8 @@ class BoxPlot(OneDimensionGraphic):
             return True
         except:
             return False
+        finally:
+            plt.close()
 
 
 class MultiBoxPlot(OneDimensionGraphic):
@@ -146,6 +177,8 @@ class MultiBoxPlot(OneDimensionGraphic):
             return True
         except:
             return False
+        finally:
+            plt.close()
 
 
 class Scatter(TwoDimensionGraphic):
@@ -156,6 +189,8 @@ class Scatter(TwoDimensionGraphic):
             plt.savefig(path)
         except:
             return False
+        finally:
+            plt.close()
 
 
 class Plot(TwoDimensionGraphic):
@@ -169,6 +204,8 @@ class Plot(TwoDimensionGraphic):
             return True
         except:
             return False
+        finally:
+            plt.close()
 
 
 class MultiPlot(TwoDimensionGraphic):
@@ -182,3 +219,5 @@ class MultiPlot(TwoDimensionGraphic):
             return True
         except:
             return False
+        finally:
+            plt.close()

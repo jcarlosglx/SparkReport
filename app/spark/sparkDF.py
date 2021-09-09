@@ -1,7 +1,7 @@
 from typing import Dict, List
 
 from app.config.configDB import DBConfig
-from app.config.configGraphics import NonGraphics
+from app.config.configGraphics import AxisGraphics
 from app.contextManager.spark.sparkDF import SparkDataFrame
 from app.graphics.graphics import Statistics
 from app.schemas.stockSchema import stock_schema
@@ -10,7 +10,7 @@ from app.schemas.stockSchema import stock_schema
 class SparkDF:
     def get_columns(self, graphics: List[str]) -> List[str]:
         names = []
-        keys = NonGraphics.get_values()
+        keys = AxisGraphics.get_values()
         for graphic in graphics:
             if graphic in keys:
                 names.append(graphic)
@@ -28,18 +28,14 @@ class SparkDF:
                 .load(DBConfig.STOCK_DB)
             )
 
-            if NonGraphics.X_Axis in types_graphics:
-                dict_data[NonGraphics.X_Axis] = file_df.select(
-                    data_json[NonGraphics.X_Axis]
+            if AxisGraphics.X_Axis in types_graphics:
+                dict_data[AxisGraphics.X_Axis] = file_df.select(
+                    data_json[AxisGraphics.X_Axis]
                 ).toPandas()
 
-            if NonGraphics.Y_Axis in types_graphics:
-                dict_data[NonGraphics.Y_Axis] = file_df.select(
-                    data_json[NonGraphics.Y_Axis]
+            if AxisGraphics.Y_Axis in types_graphics:
+                dict_data[AxisGraphics.Y_Axis] = file_df.select(
+                    data_json[AxisGraphics.Y_Axis]
                 ).toPandas()
 
-            if NonGraphics.Statistics in types_graphics:
-                dict_data[NonGraphics.Statistics] = Statistics().create(
-                    dict_data[NonGraphics.X_Axis]
-                )
         return dict_data

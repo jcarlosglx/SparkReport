@@ -8,13 +8,6 @@ from app.schemas.stockSchema import stock_schema
 
 
 class SparkDF:
-    def get_columns(self, graphics: List[str]) -> List[str]:
-        names = []
-        keys = AxisGraphics.get_values()
-        for graphic in graphics:
-            if graphic in keys:
-                names.append(graphic)
-        return names
 
     def get_spark_record(self, types_graphics: List[str], data_json: Dict) -> Dict:
         dict_data = {}

@@ -1,6 +1,7 @@
 from test.base_test.baseGetTest import BaseGetGeneralTest
-from test.base_test.baseGraphicTwoDimensionTest import BaseGraphicTwoDimensionTest
-from typing import List, Type, Dict
+from test.base_test.baseGraphicTwoDimensionTest import \
+    BaseGraphicTwoDimensionTest
+from typing import Dict, List, Type
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy

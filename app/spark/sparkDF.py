@@ -8,7 +8,6 @@ from app.schemas.stockSchema import stock_schema
 
 
 class SparkDF:
-
     def get_spark_record(self, types_graphics: List[str], data_json: Dict) -> Dict:
         dict_data = {}
 

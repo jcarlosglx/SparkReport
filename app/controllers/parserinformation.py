@@ -1,5 +1,6 @@
-from app.config.configGraphics import AxisGraphics, Graphics, NonGraphics
 from typing import Dict, List, Type
+
+from app.config.configGraphics import AxisGraphics, Graphics, NonGraphics
 
 
 class ParserInformation:

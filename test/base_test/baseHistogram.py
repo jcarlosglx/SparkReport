@@ -1,5 +1,6 @@
 from test.base_test.baseGetTest import BaseGetGeneralTest
-from test.base_test.baseGraphicOneDimensionTest import BaseGraphicOneDimensionTest
+from test.base_test.baseGraphicOneDimensionTest import \
+    BaseGraphicOneDimensionTest
 from typing import List, Type
 
 from flask import Flask

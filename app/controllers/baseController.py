@@ -2,12 +2,13 @@ from typing import Dict, List, Type
 
 from flask import Response, request
 from marshmallow import Schema
-from app.controllers.parserinformation import ParserInformation
+
 from app.config.configGraphics import AxisGraphics, Graphics, NonGraphics
 from app.contextManager.path.files import PathFiles
+from app.controllers.creatorinformation import CreatorInformation
+from app.controllers.parserinformation import ParserInformation
 from app.exceptions.handler import HandlerError
 from app.exceptions.InvalidGraphic import InvalidGraphic
-from app.controllers.creatorinformation import CreatorInformation
 from app.messages.returnMessages import MessageReturn
 from app.reports.baseReport import BaseReport
 from app.spark.sparkDF import SparkDF
@@ -37,14 +38,16 @@ class BaseController:
 
                 non_graphics = None
                 if types_non_graphics:
-                    non_graphics = creator.create_non_graphics(self.data_json, types_non_graphics)
+                    non_graphics = creator.create_non_graphics(
+                        self.data_json, types_non_graphics
+                    )
 
                 self.report().create_report(
                     data[AxisGraphics.X_Axis],
                     path_pdf.paths[0],
                     path_img.paths,
                     non_graphics,
-                    )
+                )
 
                 return MessageReturn().return_file(path_pdf.dir, path_pdf.names[0])
 

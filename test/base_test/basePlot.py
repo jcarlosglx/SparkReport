@@ -1,5 +1,6 @@
 from test.base_test.baseGetTest import BaseGetGeneralTest
-from test.base_test.baseGraphicTwoDimensionTest import BaseGraphicTwoDimensionTest
+from test.base_test.baseGraphicTwoDimensionTest import \
+    BaseGraphicTwoDimensionTest
 from typing import List, Type
 
 from flask import Flask
@@ -34,7 +35,10 @@ class BaseGetMultiPlotTest(BaseGetGeneralTest, BaseGraphicTwoDimensionTest):
         assert code_response == self.expect_status_get, self.print_error(code_response)
 
     def test_get_multi_plot_two_y(self, get_app: Flask, get_db: Type[SQLAlchemy]):
-        self.Y_Axis = [BaseGetGeneralTest.header_cvs[1], BaseGetGeneralTest.header_cvs[2]]
+        self.Y_Axis = [
+            BaseGetGeneralTest.header_cvs[1],
+            BaseGetGeneralTest.header_cvs[2],
+        ]
         self.reload_json()
         response = get_app.test_client().get(
             f"{self.url_get}{self.endpoint_get}", json=self.JSON

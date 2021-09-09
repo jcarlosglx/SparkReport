@@ -1,18 +1,18 @@
 from test.base_test.baseGetTest import BaseGetGeneralTest
+from test.base_test.baseGraphicOneDimensionTest import BaseGraphicOneDimensionTest
 from typing import List, Type
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 
-class BaseGetHistogramTest(BaseGetGeneralTest):
-    X_Axis: List[str] = [BaseGetGeneralTest.header_cvs[1]]
+class BaseGetHistogramTest(BaseGetGeneralTest, BaseGraphicOneDimensionTest):
     Graphics: List[str] = ["Histogram"]
 
     def test_get_histogram(self, get_app: Flask, get_db: Type[SQLAlchemy]):
-        json_data = {"x": self.X_Axis, "Graphics": self.Graphics}
+        self.reload_json()
         response = get_app.test_client().get(
-            f"{self.url_get}{self.endpoint_get}", json=json_data
+            f"{self.url_get}{self.endpoint_get}", json=self.JSON
         )
         if self.save_file:
             self.save_response_file(response)

@@ -2,7 +2,7 @@ from test.base_test.baseGetTest import BaseGetGeneralTest
 from typing import List, Dict
 
 
-class BaseGraphicTest:
+class BaseGraphicTwoDimensionTest:
     X_Axis: List[str] = [BaseGetGeneralTest.header_cvs[1]]
     Y_Axis: List[str] = [BaseGetGeneralTest.header_cvs[2]]
     Graphics: List[str] = [""]

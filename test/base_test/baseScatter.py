@@ -1,12 +1,12 @@
 from test.base_test.baseGetTest import BaseGetGeneralTest
-from test.base_test.baseGraphicTest import BaseGraphicTest
+from test.base_test.baseGraphicTwoDimensionTest import BaseGraphicTwoDimensionTest
 from typing import List, Type, Dict
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 
-class BaseGetScatterTest(BaseGetGeneralTest, BaseGraphicTest):
+class BaseGetScatterTest(BaseGetGeneralTest, BaseGraphicTwoDimensionTest):
     Graphics: List[str] = ["Scatter"]
 
     def test_get_scatter(self, get_app: Flask, get_db: Type[SQLAlchemy]):

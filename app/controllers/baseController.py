@@ -3,19 +3,20 @@ from typing import Dict, List, Type
 from flask import Response, request
 from marshmallow import Schema
 
-from app.config.configGraphics import Graphics, AxisGraphics, NonGraphics
+from app.config.configGraphics import AxisGraphics, Graphics, NonGraphics
 from app.contextManager.path.files import PathFiles
 from app.exceptions.handler import HandlerError
 from app.exceptions.InvalidGraphic import InvalidGraphic
 from app.graphics.graphics import GraphicName
 from app.messages.returnMessages import MessageReturn
+from app.reports.baseReport import BaseReport
 from app.spark.sparkDF import SparkDF
 
 
 class BaseController:
     data_json = request.get_json()
     schema: Type[Schema]
-    report: None
+    report: Type[BaseReport]
 
     def are_create_graphics(self, result_graph: List) -> bool:
         for result in result_graph:
@@ -27,14 +28,18 @@ class BaseController:
         graphic_allow = Graphics.Graphics_Allow
         list_graphics = []
         if graphics := data.get("Graphics"):
-            list_graphics = [graphic for graphic in graphics if graphic in graphic_allow]
+            list_graphics = [
+                graphic for graphic in graphics if graphic in graphic_allow
+            ]
         return list_graphics
 
     def get_non_graphics(self, data: Dict) -> List[str]:
         non_graphic_allow = NonGraphics.Non_Graphics_Allow
         list_graphics = []
         if graphics := data.get("Graphics"):
-            list_graphics = [graphic for graphic in graphics if graphic in non_graphic_allow]
+            list_graphics = [
+                graphic for graphic in graphics if graphic in non_graphic_allow
+            ]
         return list_graphics
 
     def create_graphics(
@@ -50,7 +55,7 @@ class BaseController:
         return results
 
     def create_non_graphics(
-            self, data: Dict, non_graphics: List[str]
+        self, data: Dict, non_graphics: List[str]
     ) -> Dict[str, str]:
         results = {}
         stock_graphic = GraphicName()

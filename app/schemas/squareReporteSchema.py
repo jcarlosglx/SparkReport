@@ -1,7 +1,8 @@
-from app.schemas.validatorSchemas import validate_graphics_name
 from typing import Dict, List
 
 from marshmallow import Schema, fields
+
+from app.schemas.validatorSchemas import validate_graphics_name
 
 
 class SquareReportSchema(Schema):

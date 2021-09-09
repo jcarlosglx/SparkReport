@@ -40,7 +40,6 @@ class GraphicBase:
 
 
 class GraphicName:
-
     def __init__(self):
         self.classes_graphics = list(OneDimensionGraphic.__subclasses__())
         self.classes_graphics.extend(list(TwoDimensionGraphic.__subclasses__()))
@@ -60,9 +59,9 @@ class GraphicName:
         return False
 
     def create_non_graphic(
-            self,
-            name_non_graphic: str,
-            x_axis: Optional[DataFrame] = None,
+        self,
+        name_non_graphic: str,
+        x_axis: Optional[DataFrame] = None,
     ) -> dict:
         try:
 
@@ -79,11 +78,11 @@ class GraphicName:
             return {}
 
     def create_graphic(
-            self,
-            name_graphic: str,
-            path: str,
-            x_axis: Optional[DataFrame] = None,
-            y_axis: Optional[DataFrame] = None,
+        self,
+        name_graphic: str,
+        path: str,
+        x_axis: Optional[DataFrame] = None,
+        y_axis: Optional[DataFrame] = None,
     ) -> bool:
         try:
 

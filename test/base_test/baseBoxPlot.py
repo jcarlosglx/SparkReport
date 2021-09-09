@@ -23,7 +23,10 @@ class BaseGetBoxPlotTest(BaseGetGeneralTest):
 class BaseGetMultiBoxPlotTest(BaseGetGeneralTest):
 
     X_Axis: List[str] = [BaseGetGeneralTest.header_cvs[1]]
-    X_N_Axis: List[str] = [BaseGetGeneralTest.header_cvs[1], BaseGetGeneralTest.header_cvs[2]]
+    X_N_Axis: List[str] = [
+        BaseGetGeneralTest.header_cvs[1],
+        BaseGetGeneralTest.header_cvs[2],
+    ]
     Graphics: List[str] = ["MultiBoxPlot"]
 
     def test_get_multi_boxplot_one_x(self, get_app: Flask, get_db: Type[SQLAlchemy]):

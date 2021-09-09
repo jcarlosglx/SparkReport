@@ -18,7 +18,7 @@ class AxisGraphics:
     def get_values() -> List[str]:
         return [getattr(AxisGraphics, field.name) for field in fields(AxisGraphics)]
 
+
 @dataclass
 class NonGraphics:
     Non_Graphics_Allow = [cls.__name__ for cls in GraphicName().classes_non_graphics]
-

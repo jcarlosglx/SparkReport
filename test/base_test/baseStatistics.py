@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 class BaseGetStatisticsTest(BaseGetGeneralTest):
-    X_Axis: List[str] = [BaseGetGeneralTest.header_cvs[1]]
+    X_Axis: str = BaseGetGeneralTest.header_cvs[1]
 
     def test_get_statistics(self, get_app: Flask, get_db: Type[SQLAlchemy]):
         json_data = {"x": self.X_Axis, "Statistics": True}

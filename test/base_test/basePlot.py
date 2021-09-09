@@ -6,11 +6,11 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 class BaseGetPlotTest(BaseGetGeneralTest):
-    X_Axis: List[str] = [BaseGetGeneralTest.header_cvs[0]]
+    X_Axis: str = BaseGetGeneralTest.header_cvs[0]
     Y_Axis: List[str] = [BaseGetGeneralTest.header_cvs[1]]
 
     def test_get_plot(self, get_app: Flask, get_db: Type[SQLAlchemy]):
-        json_data = {"x": self.X_Axis, "y": self.Y_Axis, "Plot": [self.header_cvs[2]]}
+        json_data = {"x": self.X_Axis, "y": self.Y_Axis, "Graphics": ["Plot"]}
         response = get_app.test_client().get(
             f"{self.url_get}{self.endpoint_get}", json=json_data
         )
@@ -21,14 +21,14 @@ class BaseGetPlotTest(BaseGetGeneralTest):
 
 
 class BaseGetMultiPlotTest(BaseGetGeneralTest):
-    X_Axis: List[str] = [BaseGetGeneralTest.header_cvs[0]]
+    X_Axis: str = BaseGetGeneralTest.header_cvs[0]
     Y_Axis: List[str] = [BaseGetGeneralTest.header_cvs[1]]
 
     def test_get_multi_plot_one_y(self, get_app: Flask, get_db: Type[SQLAlchemy]):
         json_data = {
             "x": self.X_Axis,
             "y": self.Y_Axis,
-            "MultiPlot": [self.header_cvs[2]],
+            "Graphics": ["MultiPlot"],
         }
         response = get_app.test_client().get(
             f"{self.url_get}{self.endpoint_get}", json=json_data
@@ -43,7 +43,7 @@ class BaseGetMultiPlotTest(BaseGetGeneralTest):
         json_data = {
             "x": self.X_Axis,
             "y": self.Y_Axis,
-            "MultiPlot": [self.header_cvs[2]],
+            "Graphics": ["MultiPlot"],
         }
         response = get_app.test_client().get(
             f"{self.url_get}{self.endpoint_get}", json=json_data

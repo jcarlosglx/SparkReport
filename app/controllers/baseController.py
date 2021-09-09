@@ -23,9 +23,12 @@ class BaseController:
                 return False
         return True
 
-    def get_graphics(self, graphics: List[str]) -> List[str]:
+    def get_graphics(self, data: Dict) -> List[str]:
         graphic_allow = Graphics.Graphics_Allow
-        return [graphic for graphic in graphics if graphic in graphic_allow]
+        list_graphics = []
+        if graphics := data.get("Graphics"):
+            list_graphics = [graphic for graphic in graphics if graphic in graphic_allow]
+        return list_graphics
 
     def create_graphics(
         self, paths: List[str], data: Dict, graphics: List[str]
@@ -45,7 +48,7 @@ class BaseController:
         schema.load(self.data_json, partial=True)
 
         keys = list(self.data_json.keys())
-        types_graphics = self.get_graphics(keys)
+        types_graphics = self.get_graphics(self.data_json)
         spark = SparkDF()
         columns = spark.get_columns(keys)
         with PathFiles(type_file="pdf") as path_pdf, PathFiles(

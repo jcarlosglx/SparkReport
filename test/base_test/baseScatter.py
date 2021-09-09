@@ -6,13 +6,14 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 class BaseGetScatterTest(BaseGetGeneralTest):
-    X_Axis: List[str] = [BaseGetGeneralTest.header_cvs[1]]
+    X_Axis: str = BaseGetGeneralTest.header_cvs[1]
+    Y_Axis: List[str] = [BaseGetGeneralTest.header_cvs[2]]
 
     def test_get_scatter(self, get_app: Flask, get_db: Type[SQLAlchemy]):
         json_data = {
             "x": self.X_Axis,
-            "y": [self.header_cvs[2]],
-            "Scatter": [self.header_cvs[2]],
+            "y": self.Y_Axis,
+            "Graphics": ["Scatter"],
         }
         response = get_app.test_client().get(
             f"{self.url_get}{self.endpoint_get}", json=json_data

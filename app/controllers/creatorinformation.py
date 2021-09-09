@@ -1,4 +1,4 @@
-from typing import Dict, List, Type
+from typing import Dict, List, Type, Optional
 from app.config.configGraphics import AxisGraphics, Graphics, NonGraphics
 from app.graphics.graphics import GraphicName
 

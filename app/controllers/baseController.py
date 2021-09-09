@@ -7,7 +7,6 @@ from app.config.configGraphics import AxisGraphics, Graphics, NonGraphics
 from app.contextManager.path.files import PathFiles
 from app.exceptions.handler import HandlerError
 from app.exceptions.InvalidGraphic import InvalidGraphic
-from app.graphics.graphics import GraphicName
 from app.controllers.creatorinformation import CreatorInformation
 from app.messages.returnMessages import MessageReturn
 from app.reports.baseReport import BaseReport
@@ -18,7 +17,6 @@ class BaseController:
     data_json = request.get_json()
     schema: Type[Schema]
     report: Type[BaseReport]
-
 
     def send_report(self) -> Response:
         self.data_json = request.get_json()
@@ -46,7 +44,7 @@ class BaseController:
                     path_pdf.paths[0],
                     path_img.paths,
                     non_graphics,
-                )
+                    )
 
                 return MessageReturn().return_file(path_pdf.dir, path_pdf.names[0])
 

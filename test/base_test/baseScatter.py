@@ -1,23 +1,18 @@
-from test.base_test.baseTest import BaseGetGeneralTest
-from typing import List, Type
+from test.base_test.baseGetTest import BaseGetGeneralTest
+from test.base_test.baseGraphicTest import BaseGraphicTest
+from typing import List, Type, Dict
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 
-class BaseGetScatterTest(BaseGetGeneralTest):
-    X_Axis: List[str] = [BaseGetGeneralTest.header_cvs[1]]
-    Y_Axis: List[str] = [BaseGetGeneralTest.header_cvs[2]]
+class BaseGetScatterTest(BaseGetGeneralTest, BaseGraphicTest):
     Graphics: List[str] = ["Scatter"]
 
     def test_get_scatter(self, get_app: Flask, get_db: Type[SQLAlchemy]):
-        json_data = {
-            "x": self.X_Axis,
-            "y": self.Y_Axis,
-            "Graphics": self.Graphics,
-        }
+        self.reload_json()
         response = get_app.test_client().get(
-            f"{self.url_get}{self.endpoint_get}", json=json_data
+            f"{self.url_get}{self.endpoint_get}", json=self.JSON
         )
         if self.save_file:
             self.save_response_file(response)

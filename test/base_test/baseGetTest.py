@@ -4,7 +4,6 @@ from typing import NoReturn, Type
 from uuid import uuid4
 
 from flask import Response as FlaskResponse
-from marshmallow import Schema
 
 from app.messages.statusMessages import STATUS_200
 from app.schemas.stockSchema import stock_schema

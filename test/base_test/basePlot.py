@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 class BaseGetPlotTest(BaseGetGeneralTest):
-    X_Axis: str = BaseGetGeneralTest.header_cvs[0]
+    X_Axis: List[str] = [BaseGetGeneralTest.header_cvs[0]]
     Y_Axis: List[str] = [BaseGetGeneralTest.header_cvs[1]]
 
     def test_get_plot(self, get_app: Flask, get_db: Type[SQLAlchemy]):
@@ -21,7 +21,7 @@ class BaseGetPlotTest(BaseGetGeneralTest):
 
 
 class BaseGetMultiPlotTest(BaseGetGeneralTest):
-    X_Axis: str = BaseGetGeneralTest.header_cvs[0]
+    X_Axis: List[str] = [BaseGetGeneralTest.header_cvs[0]]
     Y_Axis: List[str] = [BaseGetGeneralTest.header_cvs[1]]
 
     def test_get_multi_plot_one_y(self, get_app: Flask, get_db: Type[SQLAlchemy]):

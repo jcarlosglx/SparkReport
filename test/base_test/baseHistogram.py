@@ -7,9 +7,10 @@ from flask_sqlalchemy import SQLAlchemy
 
 class BaseGetHistogramTest(BaseGetGeneralTest):
     X_Axis: List[str] = [BaseGetGeneralTest.header_cvs[1]]
+    Graphics: List[str] = ["Histogram"]
 
     def test_get_histogram(self, get_app: Flask, get_db: Type[SQLAlchemy]):
-        json_data = {"x": self.X_Axis, "Graphics": ["Histogram"]}
+        json_data = {"x": self.X_Axis, "Graphics": self.Graphics}
         response = get_app.test_client().get(
             f"{self.url_get}{self.endpoint_get}", json=json_data
         )

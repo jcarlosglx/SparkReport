@@ -26,6 +26,15 @@ class TestSquareReportMultiPlot(BaseGetMultiPlotTest):
     expect_status_get = STATUS_200
 
 
+class TestSquareReportMultiPlotTwoXAxis(BaseGetMultiPlotTest):
+    endpoint_get = EndpointConfig.endpoint_square
+    expect_status_get = STATUS_200
+    Y_Axis = [
+        BaseGetGeneralTest.header_cvs[1],
+        BaseGetGeneralTest.header_cvs[2],
+    ]
+
+
 class TestSquareReportBoxPlot(BaseGetBoxPlotTest):
     endpoint_get = EndpointConfig.endpoint_square
     expect_status_get = STATUS_200
@@ -36,7 +45,7 @@ class TestSquareReportMultiBoxPlot(BaseGetMultiBoxPlotTest):
     expect_status_get = STATUS_200
 
 
-class TestSquareReportMultiBoxPlotTwoGraphic(BaseGetMultiBoxPlotTest):
+class TestSquareReportMultiBoxPlotTwoXAxis(BaseGetMultiBoxPlotTest):
     X_Axis: List[str] = [
         BaseGetGeneralTest.header_cvs[1],
         BaseGetGeneralTest.header_cvs[2],

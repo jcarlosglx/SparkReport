@@ -19,8 +19,9 @@ class BaseGetGeneralTest:
     save_file: bool = False
 
     def save_response_file(self, response: FlaskResponse, type_file: str = "pdf"):
-        with open(f"{self.path_files}{uuid4()}.{type_file}", "wb") as archive:
-            archive.write(response.data)
+        if self.save_file:
+            with open(f"{self.path_files}{uuid4()}.{type_file}", "wb") as archive:
+                archive.write(response.data)
 
     def print_error(self, code: str) -> NoReturn:
         print(f"Expected {self.expect_status_get} got {code}")

@@ -1,0 +1,2 @@
+class TestSquareReportFourGraphics:
+    pass

@@ -13,7 +13,6 @@ class BaseGetStatisticsTest(BaseGetGeneralTest):
         response = get_app.test_client().get(
             f"{self.url_get}{self.endpoint_get}", json=json_data
         )
-        if self.save_file:
-            self.save_response_file(response)
+        self.save_response_file(response)
         code_response = str(response.status_code)
         assert code_response == self.expect_status_get, self.print_error(code_response)

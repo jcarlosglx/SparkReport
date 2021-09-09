@@ -31,12 +31,21 @@ class TestQuarterReportBoxPlot(BaseGetBoxPlotTest):
     expect_status_get = STATUS_200
 
 
+class TestQuarterReportMultiPlotTwoXAxis(BaseGetMultiPlotTest):
+    endpoint_get = EndpointConfig.endpoint_square
+    expect_status_get = STATUS_200
+    Y_Axis = [
+        BaseGetGeneralTest.header_cvs[1],
+        BaseGetGeneralTest.header_cvs[2],
+    ]
+
+
 class TestQuarterReportMultiBoxPlotOneGraphic(BaseGetMultiBoxPlotTest):
     endpoint_get = EndpointConfig.endpoint_quarter
     expect_status_get = STATUS_200
 
 
-class TestQuarterReportMultiBoxPlotTwoGraphic(BaseGetMultiBoxPlotTest):
+class TestQuarterReportMultiBoxPlotTwoXAxis(BaseGetMultiBoxPlotTest):
     X_Axis: List[str] = [
         BaseGetGeneralTest.header_cvs[1],
         BaseGetGeneralTest.header_cvs[2],

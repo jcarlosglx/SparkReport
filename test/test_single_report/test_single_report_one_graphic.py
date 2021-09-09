@@ -26,12 +26,21 @@ class TestSingleReportMultiPlot(BaseGetMultiPlotTest):
     expect_status_get = STATUS_200
 
 
+class TestSingleReportMultiPlotTwoXAxis(BaseGetMultiPlotTest):
+    endpoint_get = EndpointConfig.endpoint_square
+    expect_status_get = STATUS_200
+    Y_Axis = [
+        BaseGetGeneralTest.header_cvs[1],
+        BaseGetGeneralTest.header_cvs[2],
+    ]
+
+
 class TestSingleReportBoxPlot(BaseGetBoxPlotTest):
     endpoint_get = EndpointConfig.endpoint_single
     expect_status_get = STATUS_200
 
 
-class TestSingleReportMultiBoxPlotTwoGraphic(BaseGetMultiBoxPlotTest):
+class TestSingleReportMultiBoxPlotTwoXAxis(BaseGetMultiBoxPlotTest):
     X_Axis: List[str] = [
         BaseGetGeneralTest.header_cvs[1],
         BaseGetGeneralTest.header_cvs[2],

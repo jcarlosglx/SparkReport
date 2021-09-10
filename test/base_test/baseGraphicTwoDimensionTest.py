@@ -1,7 +1,7 @@
 from test.base_test.baseGetTest import BaseGetGeneralTest
 from typing import Dict, List
 
-from app.graphics.graphics import TwoDimensionGraphic
+from app.graphics.twoDimensionGraphic import TwoDimensionGraphic
 
 
 class BaseGraphicTwoDimensionTest:

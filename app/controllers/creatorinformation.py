@@ -1,7 +1,7 @@
 from typing import Dict, List, Optional, Type
 
 from app.config.configGraphics import AxisGraphics, Graphics, NonGraphics
-from app.graphics.graphics import GraphicName
+from app.graphics.graphic import GraphicName
 
 
 class CreatorInformation:

@@ -1,7 +1,7 @@
 from dataclasses import dataclass, fields
 from typing import List
 
-from app.graphics.graphics import GraphicName
+from app.graphics.graphic import GraphicName
 
 
 @dataclass

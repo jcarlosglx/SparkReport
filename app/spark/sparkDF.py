@@ -3,7 +3,6 @@ from typing import Dict, List
 from app.config.configDB import DBConfig
 from app.config.configGraphics import AxisGraphics
 from app.contextManager.spark.sparkDF import SparkDataFrame
-from app.graphics.graphics import Statistics
 from app.schemas.stockSchema import stock_schema
 
 

@@ -1,9 +1,9 @@
-from typing import Dict, List, Type
+from typing import Type
 
 from flask import Response, request
 from marshmallow import Schema
 
-from app.config.configGraphics import AxisGraphics, Graphics, NonGraphics
+from app.config.configGraphics import AxisGraphics
 from app.contextManager.path.files import PathFiles
 from app.controllers.creatorinformation import CreatorInformation
 from app.controllers.parserinformation import ParserInformation

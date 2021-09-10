@@ -14,7 +14,6 @@ class BaseMultiGraphicsTwoDimension(BaseGetGeneralTest, BaseGraphicTwoDimensionT
     Graphics = BaseGraphicTwoDimensionTest.TypeGraphics[:]
     endpoint_get = EndpointConfig.endpoint_square
     expect_status_get = STATUS_200
-    save_file = True
 
     def test(self, get_app: Flask, get_db: Type[SQLAlchemy]):
         self.reload_json()

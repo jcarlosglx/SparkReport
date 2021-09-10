@@ -61,5 +61,4 @@ class TestSingleReportScatter(BaseGetScatterTest):
 
 class TestSingleReportStatistics(BaseGetStatisticsTest):
     endpoint_get = EndpointConfig.endpoint_single
-    save_file = True
     expect_status_get = STATUS_200

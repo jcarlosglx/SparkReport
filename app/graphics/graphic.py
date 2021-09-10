@@ -32,9 +32,9 @@ class GraphicName:
                 return cls()
         return False
 
-    def _get_class_non_graphics(self, name_graphic: str) -> Union[object, bool]:
-        for cls in self.classes_graphics:
-            if cls.__name__ == name_graphic:
+    def _get_class_non_graphics(self, name_non_graphic: str) -> Union[object, bool]:
+        for cls in self.classes_non_graphics:
+            if cls.__name__ == name_non_graphic:
                 return cls()
         return False
 
@@ -44,12 +44,7 @@ class GraphicName:
         x_axis: Optional[DataFrame] = None,
     ) -> dict:
         try:
-
-            obj = self._get_class_non_graphics(name_non_graphic)
-            if not obj:
-                return {}
-
-            if isinstance(x_axis, DataFrame):
+            if obj := self._get_class_non_graphics(name_non_graphic):
                 method = getattr(obj, "create")
                 return method(x_axis)
             else:

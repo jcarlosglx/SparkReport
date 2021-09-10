@@ -39,7 +39,7 @@ class BaseController:
                 non_graphics = None
                 if types_non_graphics:
                     non_graphics = creator.create_non_graphics(
-                        self.data_json, types_non_graphics
+                        data, types_non_graphics
                     )
 
                 self.report().create_report(

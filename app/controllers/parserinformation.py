@@ -16,7 +16,7 @@ class ParserInformation:
     def get_non_graphics(self, data: Dict) -> List[str]:
         non_graphic_allow = NonGraphics.Non_Graphics_Allow
         list_graphics = []
-        if graphics := data.get("Graphics"):
+        if graphics := data.get("NonGraphics"):
             list_graphics = [
                 graphic for graphic in graphics if graphic in non_graphic_allow
             ]

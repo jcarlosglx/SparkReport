@@ -1,14 +1,15 @@
 from abc import ABC, abstractmethod
-from app.graphics.baseGraphic import GraphicBase
+
 import matplotlib.pyplot as plt
 from pandas import DataFrame
+
+from app.graphics.baseGraphic import GraphicBase
+
 
 class TwoDimensionGraphic(ABC, GraphicBase):
     @abstractmethod
     def create(self, pandas_x_df: DataFrame, pandas_y_df: DataFrame, path: str) -> bool:
         pass
-
-
 
 
 class Scatter(TwoDimensionGraphic):
@@ -52,4 +53,3 @@ class MultiPlot(TwoDimensionGraphic):
             return False
         finally:
             plt.close()
-

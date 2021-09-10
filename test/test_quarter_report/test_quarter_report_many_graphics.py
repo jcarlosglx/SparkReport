@@ -1,3 +1,5 @@
+from test.base_test.baseMultiGraphicMixDimension import \
+    BaseMultiGraphicsMixDimension
 from test.base_test.baseMultiGraphicOneDimension import \
     BaseMultiGraphicsOneDimension
 from test.base_test.baseMultiGraphicTwoDimension import \
@@ -31,19 +33,28 @@ class TestQuarterReportTwoGraphicsOneDimension(BaseMultiGraphicsOneDimension):
     expect_status_get = STATUS_200
 
 
-class TestQuarterReportFourGraphicsMultiDimension(BaseMultiGraphicsTwoDimension):
-    Graphics = BaseMultiGraphicsOneDimension.TypeGraphics[:2] + BaseMultiGraphicsTwoDimension.TypeGraphics[:2]
+class TestQuarterReportFourGraphicsMixDimension(BaseMultiGraphicsMixDimension):
+    Graphics = (
+        BaseMultiGraphicsOneDimension.TypeGraphics[:2]
+        + BaseMultiGraphicsTwoDimension.TypeGraphics[:2]
+    )
     endpoint_get = EndpointConfig.endpoint_square
     expect_status_get = STATUS_200
 
 
-class TestQuarterReportThreeGraphicsMultiDimension(BaseMultiGraphicsTwoDimension):
-    Graphics = BaseMultiGraphicsOneDimension.TypeGraphics[:1] + BaseMultiGraphicsTwoDimension.TypeGraphics[:2]
+class TestQuarterReportThreeGraphicsMixDimension(BaseMultiGraphicsMixDimension):
+    Graphics = (
+        BaseMultiGraphicsOneDimension.TypeGraphics[:1]
+        + BaseMultiGraphicsTwoDimension.TypeGraphics[:2]
+    )
     endpoint_get = EndpointConfig.endpoint_square
     expect_status_get = STATUS_200
 
 
-class TestQuarterReportTwoGraphicsMultiDimension(BaseMultiGraphicsTwoDimension):
-    Graphics = BaseMultiGraphicsOneDimension.TypeGraphics[:1] + BaseMultiGraphicsTwoDimension.TypeGraphics[:1]
+class TestQuarterReportTwoGraphicsMixDimension(BaseMultiGraphicsMixDimension):
+    Graphics = (
+        BaseMultiGraphicsOneDimension.TypeGraphics[:1]
+        + BaseMultiGraphicsTwoDimension.TypeGraphics[:1]
+    )
     endpoint_get = EndpointConfig.endpoint_square
     expect_status_get = STATUS_200

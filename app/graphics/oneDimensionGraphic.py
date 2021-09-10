@@ -1,7 +1,9 @@
 from abc import ABC, abstractmethod
-from app.graphics.baseGraphic import GraphicBase
+
 import matplotlib.pyplot as plt
 from pandas import DataFrame
+
+from app.graphics.baseGraphic import GraphicBase
 
 
 class OneDimensionGraphic(ABC, GraphicBase):
@@ -50,4 +52,3 @@ class MultiBoxPlot(OneDimensionGraphic):
             return False
         finally:
             plt.close()
-

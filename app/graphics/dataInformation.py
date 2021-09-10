@@ -1,7 +1,9 @@
-from app.graphics.baseGraphic import GraphicBase
 from abc import ABC, abstractmethod
 
 from pandas import DataFrame
+
+from app.graphics.baseGraphic import GraphicBase
+
 
 class DataInformation(ABC, GraphicBase):
     @abstractmethod

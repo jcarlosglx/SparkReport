@@ -1,8 +1,10 @@
+from typing import Optional, Union
+
+from pandas import DataFrame
+
+from app.graphics.dataInformation import DataInformation
 from app.graphics.oneDimensionGraphic import OneDimensionGraphic
 from app.graphics.twoDimensionGraphic import TwoDimensionGraphic
-from app.graphics.dataInformation import DataInformation
-from typing import Optional, Union
-from pandas import DataFrame
 
 
 class GraphicName:
@@ -14,13 +16,17 @@ class GraphicName:
         self.classes_graphics = list(self.one_dimension_classes_graphics.copy())
         self.classes_graphics.extend(list(self.two_dimension_classes_graphics))
 
-    def _get_class_one_dimension_graphics(self, name_graphic: str) -> Union[object, bool]:
+    def _get_class_one_dimension_graphics(
+        self, name_graphic: str
+    ) -> Union[object, bool]:
         for cls in self.one_dimension_classes_graphics:
             if cls.__name__ == name_graphic:
                 return cls()
         return False
 
-    def _get_class_two_dimension_graphics(self, name_graphic: str) -> Union[object, bool]:
+    def _get_class_two_dimension_graphics(
+        self, name_graphic: str
+    ) -> Union[object, bool]:
         for cls in self.two_dimension_classes_graphics:
             if cls.__name__ == name_graphic:
                 return cls()
@@ -33,9 +39,9 @@ class GraphicName:
         return False
 
     def create_non_graphic(
-            self,
-            name_non_graphic: str,
-            x_axis: Optional[DataFrame] = None,
+        self,
+        name_non_graphic: str,
+        x_axis: Optional[DataFrame] = None,
     ) -> dict:
         try:
 
@@ -52,11 +58,11 @@ class GraphicName:
             return {}
 
     def create_graphic(
-            self,
-            name_graphic: str,
-            path: str,
-            x_axis: Optional[DataFrame] = None,
-            y_axis: Optional[DataFrame] = None,
+        self,
+        name_graphic: str,
+        path: str,
+        x_axis: Optional[DataFrame] = None,
+        y_axis: Optional[DataFrame] = None,
     ) -> bool:
         try:
 

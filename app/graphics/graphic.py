@@ -7,13 +7,21 @@ from pandas import DataFrame
 
 class GraphicName:
     def __init__(self):
-        self.classes_graphics = list(OneDimensionGraphic.__subclasses__())
-        self.classes_graphics.extend(list(TwoDimensionGraphic.__subclasses__()))
-
+        self.one_dimension_classes_graphics = OneDimensionGraphic.__subclasses__()
+        self.two_dimension_classes_graphics = TwoDimensionGraphic.__subclasses__()
         self.classes_non_graphics = list(DataInformation.__subclasses__())
 
-    def _get_class_graphics(self, name_graphic: str) -> Union[object, bool]:
-        for cls in self.classes_graphics:
+        self.classes_graphics = list(self.one_dimension_classes_graphics.copy())
+        self.classes_graphics.extend(list(self.two_dimension_classes_graphics))
+
+    def _get_class_one_dimension_graphics(self, name_graphic: str) -> Union[object, bool]:
+        for cls in self.one_dimension_classes_graphics:
+            if cls.__name__ == name_graphic:
+                return cls()
+        return False
+
+    def _get_class_two_dimension_graphics(self, name_graphic: str) -> Union[object, bool]:
+        for cls in self.two_dimension_classes_graphics:
             if cls.__name__ == name_graphic:
                 return cls()
         return False
@@ -52,15 +60,11 @@ class GraphicName:
     ) -> bool:
         try:
 
-            obj = self._get_class_graphics(name_graphic)
-            if not obj:
-                return False
-
-            if isinstance(x_axis, DataFrame) and not isinstance(y_axis, DataFrame):
+            if obj := self._get_class_one_dimension_graphics(name_graphic):
                 method = getattr(obj, "create")
                 return method(x_axis, path)
 
-            elif isinstance(x_axis, DataFrame) and isinstance(y_axis, DataFrame):
+            elif obj := self._get_class_two_dimension_graphics(name_graphic):
                 method = getattr(obj, "create")
                 method(x_axis, y_axis, path)
                 return True

@@ -17,6 +17,7 @@ class Scatter(TwoDimensionGraphic):
             self._single_template("Stock compare", pandas_x_df, pandas_y_df)
             plt.scatter(pandas_x_df, pandas_y_df)
             plt.savefig(path)
+            return True
         except:
             return False
         finally:

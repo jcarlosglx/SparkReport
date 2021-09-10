@@ -1,16 +1,16 @@
-from test.base_test.baseGetTest import BaseGetGeneralTest
-from test.base_test.baseGraphicOneDimensionTest import \
-    BaseGraphicOneDimensionTest
+from test.base_test.base_http.baseGetTest import BaseGetGeneralTest
+from test.base_test.base_dimension.baseGraphicTwoDimensionTest import \
+    BaseGraphicTwoDimensionTest
 from typing import List, Type
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 
-class BaseGetHistogramTest(BaseGetGeneralTest, BaseGraphicOneDimensionTest):
-    Graphics: List[str] = ["Histogram"]
+class BaseGetScatterTest(BaseGetGeneralTest, BaseGraphicTwoDimensionTest):
+    Graphics: List[str] = ["Scatter"]
 
-    def test_get_histogram(self, get_app: Flask, get_db: Type[SQLAlchemy]):
+    def test_get_scatter(self, get_app: Flask, get_db: Type[SQLAlchemy]):
         self.reload_json()
         response = get_app.test_client().get(
             f"{self.url_get}{self.endpoint_get}", json=self.JSON

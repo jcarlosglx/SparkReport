@@ -1,5 +1,7 @@
-from test.base_test.baseGetTest import BaseGetGeneralTest
-from test.base_test.baseGraphicTwoDimensionTest import \
+from test.base_test.base_http.baseGetTest import BaseGetGeneralTest
+from test.base_test.base_dimension.baseGraphicOneDimensionTest import \
+    BaseGraphicOneDimensionTest
+from test.base_test.base_dimension.baseGraphicTwoDimensionTest import \
     BaseGraphicTwoDimensionTest
 from typing import Type
 
@@ -10,8 +12,11 @@ from app.config.configEndpoint import EndpointConfig
 from app.messages.statusMessages import STATUS_200
 
 
-class BaseMultiGraphicsTwoDimension(BaseGetGeneralTest, BaseGraphicTwoDimensionTest):
-    Graphics = BaseGraphicTwoDimensionTest.TypeGraphics[:]
+class BaseMultiGraphicsMixDimension(BaseGetGeneralTest, BaseGraphicTwoDimensionTest):
+    Graphics = (
+        BaseGraphicOneDimensionTest.TypeGraphics[:]
+        + BaseGraphicTwoDimensionTest.TypeGraphics[:]
+    )
     endpoint_get = EndpointConfig.endpoint_square
     expect_status_get = STATUS_200
 

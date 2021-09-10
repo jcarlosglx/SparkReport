@@ -1,4 +1,4 @@
-from test.base_test.baseGetTest import BaseGetGeneralTest
+from test.base_test.base_http.baseGetTest import BaseGetGeneralTest
 from typing import List, Type
 
 from flask import Flask

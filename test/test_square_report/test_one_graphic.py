@@ -1,32 +1,32 @@
-from test.base_test.baseBoxPlot import (BaseGetBoxPlotTest,
-                                        BaseGetMultiBoxPlotTest)
-from test.base_test.baseGetTest import BaseGetGeneralTest
-from test.base_test.baseHistogram import BaseGetHistogramTest
-from test.base_test.basePlot import BaseGetMultiPlotTest, BaseGetPlotTest
-from test.base_test.baseScatter import BaseGetScatterTest
-from test.base_test.baseStatistics import BaseGetStatisticsTest
+from test.base_test.graphics.baseBoxPlot import (BaseGetBoxPlotTest,
+                                                 BaseGetMultiBoxPlotTest)
+from test.base_test.base_http.baseGetTest import BaseGetGeneralTest
+from test.base_test.graphics.baseHistogram import BaseGetHistogramTest
+from test.base_test.graphics.basePlot import BaseGetMultiPlotTest, BaseGetPlotTest
+from test.base_test.graphics.baseScatter import BaseGetScatterTest
+from test.base_test.graphics.baseStatistics import BaseGetStatisticsTest
 from typing import List
 
 from app.config.configEndpoint import EndpointConfig
 from app.messages.statusMessages import STATUS_200
 
 
-class TestSquareReportHistogram(BaseGetHistogramTest):
+class TestHistogram(BaseGetHistogramTest):
     endpoint_get = EndpointConfig.endpoint_square
     expect_status_get = STATUS_200
 
 
-class TestSquareReportPlot(BaseGetPlotTest):
+class TestPlot(BaseGetPlotTest):
     endpoint_get = EndpointConfig.endpoint_square
     expect_status_get = STATUS_200
 
 
-class TestSquareReportMultiPlot(BaseGetMultiPlotTest):
+class TestMultiPlot(BaseGetMultiPlotTest):
     endpoint_get = EndpointConfig.endpoint_square
     expect_status_get = STATUS_200
 
 
-class TestSquareReportMultiPlotTwoXAxis(BaseGetMultiPlotTest):
+class TestMultiPlotTwoXAxis(BaseGetMultiPlotTest):
     endpoint_get = EndpointConfig.endpoint_square
     expect_status_get = STATUS_200
     Y_Axis = [
@@ -35,17 +35,17 @@ class TestSquareReportMultiPlotTwoXAxis(BaseGetMultiPlotTest):
     ]
 
 
-class TestSquareReportBoxPlot(BaseGetBoxPlotTest):
+class TestBoxPlot(BaseGetBoxPlotTest):
     endpoint_get = EndpointConfig.endpoint_square
     expect_status_get = STATUS_200
 
 
-class TestSquareReportMultiBoxPlot(BaseGetMultiBoxPlotTest):
+class TestMultiBoxPlot(BaseGetMultiBoxPlotTest):
     endpoint_get = EndpointConfig.endpoint_square
     expect_status_get = STATUS_200
 
 
-class TestSquareReportMultiBoxPlotTwoXAxis(BaseGetMultiBoxPlotTest):
+class TestMultiBoxPlotTwoXAxis(BaseGetMultiBoxPlotTest):
     X_Axis: List[str] = [
         BaseGetGeneralTest.header_cvs[1],
         BaseGetGeneralTest.header_cvs[2],
@@ -54,11 +54,11 @@ class TestSquareReportMultiBoxPlotTwoXAxis(BaseGetMultiBoxPlotTest):
     expect_status_get = STATUS_200
 
 
-class TestSquareReportScatter(BaseGetScatterTest):
+class TestScatter(BaseGetScatterTest):
     endpoint_get = EndpointConfig.endpoint_square
     expect_status_get = STATUS_200
 
 
-class TestSquareReportStatistics(BaseGetStatisticsTest):
+class TestStatistics(BaseGetStatisticsTest):
     endpoint_get = EndpointConfig.endpoint_square
     expect_status_get = STATUS_200

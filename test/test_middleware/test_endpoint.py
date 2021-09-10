@@ -1,4 +1,4 @@
-from test.base_test.baseHistogram import BaseGetHistogramTest
+from test.base_test.graphics.baseHistogram import BaseGetHistogramTest
 
 from app.messages.statusMessages import STATUS_500
 

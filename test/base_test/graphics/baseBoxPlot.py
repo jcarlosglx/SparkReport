@@ -1,5 +1,5 @@
-from test.base_test.baseGetTest import BaseGetGeneralTest
-from test.base_test.baseGraphicOneDimensionTest import \
+from test.base_test.base_http.baseGetTest import BaseGetGeneralTest
+from test.base_test.base_dimension.baseGraphicOneDimensionTest import \
     BaseGraphicOneDimensionTest
 from typing import List, Type
 

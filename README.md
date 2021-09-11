@@ -1,16 +1,40 @@
 # API Template
 
-This is a project where I wrote a "basic" API-Rest's template for future projects or
-technologies I would like to learn (in order to safe time :D)
+The main idea of the project is to have a reporting tool where Apache Spark is the information manager. For the present
+example I use a "database" with stocks (don't use it for real)
 
 ## Aim
 
-The intention for this project is for show some technologies that I either: use, like, learned
-or would like to learn.
+At present, information is valuable, but it is only unpredictable when we understand the impact that we can generate 
+either with a product or service. So having a tool that can synthesize the above through reports can, among many other 
+things: add value to decision-making, simplify a sea of data, save time and effort.
 
 ## Features
 
-- GET, DELETE, POST, PATH for data endpoints
+- GET, data endpoints
+  * localhost/api/single
+    * This will give a report with a single graphic (for specialized analysis) and if you wish a set of statistics
+  * localhost/api/quarter
+      * This will give a report with up to for graphic and if you wish a set of statistics
+  * localhost/api/square
+      * This will give a report with up to six graphic but no set of statistics
+- Analysis
+    * Graphics
+        * For the moment we can handle the next graphics
+          * Histogram
+          * BoxPlot
+          * MultiBoxPlot
+          * Plot
+          * MultiPlot
+          * Scatter
+  * Non Graphics
+      * For the moment we can handle the next non graphics
+          * Min
+          * Max
+          * Mean
+          * Mode
+          * Median
+          * Standard Deviation
 - A Middleware for create and save logs
 - Security in the processing of the data
 - A set of commands for repetitive tasks for example: testing, create/delete db, CI/CD, etc.
@@ -18,6 +42,48 @@ or would like to learn.
 - A Kubernetes configuration for test/dev
 
 ## Usage
+### User
+
+To interact with the program ask HTTP's request type GET with the JSON in the next way
+
+JSON = {
+    "Graphics" : [\'Histogram\'],
+    "NonGraphics" : [\'Statistics\'],
+    "y" : [\'AAPL\'],
+    "x" : [\'Date\']
+}
+Since all params are list, you send more than one, and of course you will receive each graphic with the params
+#### Optionals params:
+- Graphics
+  * Histogram
+  * BoxPlot
+  * MultiBoxPlot
+  * Plot
+  * MultiPlot
+  * Scatter
+- NonGraphics
+    * Statistics 
+- y
+  * Date 
+  * AAPL 
+  * T 
+  * BA 
+  * MGM 
+  * IBM 
+  * TSLA 
+  * GOOG
+  * sp500
+#### Required params:
+- x
+    * Date 
+    * AAPL 
+    * T 
+    * BA 
+    * MGM 
+    * IBM 
+    * TSLA 
+    * GOOG
+    * sp500
 
 ### Developer
 

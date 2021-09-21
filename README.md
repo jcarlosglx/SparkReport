@@ -5,9 +5,9 @@ example I use a "database" with stocks (don't use it for real)
 
 ## Aim
 
-At present, information is valuable, but it is only unpredictable when we understand the impact that we can generate 
-either with a product or service. So having a tool that can synthesize the above through reports can, among many other 
-things: add value to decision-making, simplify a sea of data, save time and effort.
+At present, information is valuable, but it is only important when we understand the impact that we can generate 
+either with a product, service or in this case our money. So having a tool that can synthesize the above through reports can, among many other 
+things: add value to decision-making, simplify a sea of data, save time and effort is a necessity.
 
 ## Features
 
@@ -52,7 +52,8 @@ JSON = {
     "y" : [\'AAPL\'],
     "x" : [\'Date\']
 }
-Since all params are list, you send more than one, and of course you will receive each graphic with the params
+
+Since all params are list, you can send more than one, and of course you will receive each graphic for each param
 #### Optionals params:
 - Graphics
   * Histogram
